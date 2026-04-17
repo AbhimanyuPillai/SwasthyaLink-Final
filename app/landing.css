@@ -67,6 +67,18 @@
   gap: 16px;
 }
 
+@media (max-width: 768px) {
+  .nav-buttons {
+    display: none; /* Hide buttons on mobile as requested */
+  }
+  .header {
+    padding: 0 20px;
+  }
+  .logo-text {
+    font-size: 18px;
+  }
+}
+
 .nav-btn {
   background: var(--primary);
   color: white;
@@ -105,6 +117,19 @@
   color: var(--primary);
   letter-spacing: -3px;
   z-index: 100;
+  text-align: center;
+  padding: 0 20px;
+}
+
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 42px; /* Smaller title for mobile */
+    letter-spacing: -1.5px;
+  }
+  .post-animation-text {
+    font-size: 24px !important;
+    padding: 0 20px;
+  }
 }
 
 .frame-container {

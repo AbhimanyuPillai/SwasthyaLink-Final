@@ -34,7 +34,8 @@ export function MedicalRecord() {
     const unsubscribeAuth = onAuthStateChanged(auth, (user) => {
       if (user) {
         const recordsRef = collection(db, "users", user.uid, "medical_records")
-        const q = query(recordsRef, orderBy("date", "desc"))
+        // Try this temporarily:
+        const q = query(recordsRef);
 
         unsubSnapshot = onSnapshot(q, (snapshot) => {
           const fetchedRecords = snapshot.docs.map(doc => {
@@ -57,7 +58,7 @@ export function MedicalRecord() {
               hospitalName: data.hospitalName || data.location || "Private Clinic",
               diagnosis: data.diagnosis || "No specific diagnosis recorded",
               symptoms: Array.isArray(data.symptoms) ? data.symptoms : (data.symptoms ? [data.symptoms] : []),
-              prescriptions: Array.isArray(data.prescriptions) ? data.prescriptions : (data.prescriptions ? [data.prescriptions] : []),
+              prescriptions: Array.isArray(data.prescription) ? data.prescriptions : (data.prescriptions ? [data.prescriptions] : []),
               notes: data.doctorNotes || data.notes || "No additional notes provided.",
               followUp: data.followUpDate ? (data.followUpDate.toDate ? format(data.followUpDate.toDate(), "dd MMM yyyy") : data.followUpDate) : undefined
             }

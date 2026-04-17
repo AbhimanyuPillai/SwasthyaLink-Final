@@ -74,8 +74,8 @@ export const handlePatientLookup = async (searchTerm: string): Promise<Patient |
     const patientDoc = querySnapshot.docs[0];
     const docData = patientDoc.data();
 
-    // Fetch medical records from the 'records' subcollection
-    const recordsRef = collection(db, "users", patientDoc.id, "records");
+    // Fetch medical records from the 'medical_records' subcollection
+    const recordsRef = collection(db, "users", patientDoc.id, "medical_records");
     const recordsSnapshot = await getDocs(recordsRef);
 
     const medicalHistory = recordsSnapshot.docs.map(doc => ({

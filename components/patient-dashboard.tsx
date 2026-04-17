@@ -121,7 +121,7 @@ export function PatientDashboard({ onBack }: PatientDashboardProps) {
                 : "N/A"
               }
             </div>
-            <div className="text-xs lg:text-sm text-muted-foreground">Last Visit</div>
+            <div className="text-xs lg:text-sm text-gray-500 font-medium">Last Visit</div>
           </CardContent>
         </Card>
         <Card className="border-border/50">
@@ -144,12 +144,12 @@ export function PatientDashboard({ onBack }: PatientDashboardProps) {
 
       {/* Add New Record Button */}
       <Button
-        onClick={() => setShowAddRecord(true)}
-        className="w-full h-14 text-base font-semibold rounded-xl shadow-lg shadow-secondary/20 hover:shadow-xl hover:shadow-secondary/30 transition-all bg-secondary hover:bg-secondary/90"
-      >
-        <Plus className="mr-2 w-5 h-5" />
-        Add New Medical Record
-      </Button>
+  onClick={() => setShowAddRecord(true)}
+  className="w-full h-14 text-base font-semibold rounded-xl shadow-lg shadow-green-600/20 hover:shadow-xl hover:shadow-green-600/30 transition-all bg-green-600 hover:bg-green-700 text-white"
+>
+  <Plus className="mr-2 w-5 h-5" />
+  Add New Medical Record
+</Button>
 
       {/* Medical History */}
       <Card className="border-border/50 shadow-lg">

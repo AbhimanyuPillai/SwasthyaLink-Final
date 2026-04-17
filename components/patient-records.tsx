@@ -307,7 +307,7 @@ export function PatientRecords({ onBack, onViewPatient }: PatientRecordsProps) {
                     {lastVisit && (
                       <div className="mt-4 pt-4 border-t border-border/50 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                         <div>
-                          <p className="text-xs text-muted-foreground mb-1">Last Visit</p>
+                        <p className="text-xs text-gray-500 mb-1 font-medium">Last Visit</p>
                           <div className="flex items-center gap-2">
                             <Calendar className="w-4 h-4 text-primary" />
                             <span className="text-sm font-medium text-foreground">

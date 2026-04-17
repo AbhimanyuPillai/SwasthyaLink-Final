@@ -1,0 +1,612 @@
+[
+    {
+        "hospital_id": "HOS-001",
+        "full_name": "Dr. Aditi Kulkarni",
+        "hospital_name": "Ruby Hall Clinic - Sassoon Road (Main Branch)",
+        "specialty": "Multi-Specialty (Cardiology, Neurology, Oncology, Orthopedics, CT Angiography)",
+        "phone": "+91 20 6645 5100",
+        "area_zone": "Camp / Sassoon Road",
+        "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJFS5RJ_jAwjsRB5zk2s6LU0c",
+        "operating_hours": "Open 24 Hours, All Days"
+    },
+    {
+        "hospital_id": "HOS-002",
+        "full_name": "Dr. Rajesh Patil",
+        "hospital_name": "Jehangir Hospital (Apollo Group)",
+        "specialty": "Multi-Specialty (Cardiology, Nephrology, Gynecology, Orthopedics, Gastroenterology)",
+        "phone": "+91 20 6681 9999",
+        "area_zone": "Camp / Sassoon Road",
+        "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJg5LSFljAwjsRE-EkJ0XDmP4",
+        "operating_hours": "Open 24 Hours, All Days"
+    },
+    {
+        "hospital_id": "HOS-003",
+        "full_name": "Dr. Sunita Deshmukh",
+        "hospital_name": "KEM Hospital",
+        "specialty": "Multi-Specialty (NICU, Bariatric Surgery, Gynecology, General Surgery, Urology)",
+        "phone": "+91 20 6603 7300",
+        "area_zone": "Rasta Peth",
+        "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJ4ZP9omfAwjsRG5sPQlKaAR0",
+        "operating_hours": "Open 24 Hours, All Days"
+    },
+    {
+        "hospital_id": "HOS-004",
+        "full_name": "Dr. Vikram Joshi",
+        "hospital_name": "Sassoon General Hospital",
+        "specialty": "Government Multi-Specialty (Emergency, ENT, Yellow Fever Vaccination)",
+        "phone": "+91 20 2612 8000",
+        "area_zone": "Near Pune Railway Station",
+        "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJ_btzKhrBwjsRKBXOvpY7RFs",
+        "operating_hours": "OPD: Mon-Sat 9:00 AM - 12:00 PM; Emergency: 24x7"
+    },
+    {
+        "hospital_id": "HOS-005",
+        "full_name": "Dr. Priya Sharma",
+        "hospital_name": "Central Railway Hospital",
+        "specialty": "Railway Staff Hospital (General Medicine, Orthopedics, Emergency)",
+        "phone": "+91 20 2611 1528",
+        "area_zone": "Pune Railway Station / Cantonment",
+        "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJNzTDzV7AwjsRG1cMb1qd-eo",
+        "operating_hours": "Mon-Sat: 9:00 AM - 5:00 PM"
+    },
+    {
+        "hospital_id": "HOS-006",
+        "full_name": "Dr. Anil Mehta",
+        "hospital_name": "West Valley Multispeciality Hospital",
+        "specialty": "Multi-Specialty (ICU, Cardiac, Emergency, General Medicine)",
+        "phone": "+91 80 4804 5849",
+        "area_zone": "Sangamvadi",
+        "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJZ3EvH0XBwjsRAAItUrKYGMo",
+        "operating_hours": "Open 24 Hours, All Days"
+    },
+    {
+        "hospital_id": "HOS-007",
+        "full_name": "Dr. Kavita Iyer",
+        "hospital_name": "Bora Hospital",
+        "specialty": "Cardiology, Cardiac Emergency, Hernia Surgery, ICU",
+        "phone": "+91 97650 35935",
+        "area_zone": "Ganesh Peth",
+        "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJ1dn2LkLAwjsRHRKSCSA7qP4",
+        "operating_hours": "Open 24 Hours, All Days"
+    },
+    {
+        "hospital_id": "HOS-008",
+        "full_name": "Dr. Suresh Nair",
+        "hospital_name": "Kamla Nehru Hospital",
+        "specialty": "Government Hospital (Maternity, General Medicine, Pediatrics)",
+        "phone": "+91 87899 44965",
+        "area_zone": "Kasba Peth / Mangalwar Peth",
+        "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJgyCd5mbAwjsRdkRgsczZrMM",
+        "operating_hours": "Tue: Open 24 Hours; Emergency 24x7"
+    },
+    {
+        "hospital_id": "HOS-009",
+        "full_name": "Dr. Meena Gokhale",
+        "hospital_name": "Apollo Spectra Hospitals",
+        "specialty": "Multi-Specialty (Spine Surgery, Orthopedics, Diagnostics, General Medicine)",
+        "phone": "+91 84484 40991",
+        "area_zone": "Sadashiv Peth / Swargate",
+        "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJCVq-mA3AwjsRUzKAs5tjuo0",
+        "operating_hours": "Open 24 Hours, All Days"
+    },
+    {
+        "hospital_id": "HOS-010",
+        "full_name": "Dr. Ravi Deshpande",
+        "hospital_name": "Poona Hospital and Research Centre",
+        "specialty": "Multi-Specialty (Neurology, Cancer, Radiology, Cardiology, Angioplasty)",
+        "phone": "+91 97305 59600",
+        "area_zone": "Sadashiv Peth / Deccan",
+        "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJE_kJ-XXAwjsRvi6MSacu0VQ",
+        "operating_hours": "Open 24 Hours, All Days"
+    },
+    {
+        "hospital_id": "HOS-011",
+        "full_name": "Dr. Anita Bose",
+        "hospital_name": "Sancheti Hospital",
+        "specialty": "Orthopedics & Specialized Surgery (Spine, Knee, Trauma, Hand Surgery)",
+        "phone": "+91 88888 08845",
+        "area_zone": "Shivaji Nagar",
+        "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJhV5c3YbAwjsRcN84iUXQioo",
+        "operating_hours": "Open 24 Hours, All Days"
+    },
+    {
+        "hospital_id": "HOS-012",
+        "full_name": "Dr. Prakash Wagh",
+        "hospital_name": "MJM Hospital",
+        "specialty": "Multi-Specialty (Maternity, General Surgery, OBG, Neonatology)",
+        "phone": "+91 20 4149 9999",
+        "area_zone": "Shivaji Nagar",
+        "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJCfz3PX_AwjsRUmbzdBqcQ1Y",
+        "operating_hours": "Open 24 Hours, All Days"
+    },
+    {
+        "hospital_id": "HOS-013",
+        "full_name": "Dr. Smita Phadke",
+        "hospital_name": "Deccan Hardikar Hospital",
+        "specialty": "Orthopedics, Knee Replacement, General Surgery",
+        "phone": "+91 77579 64091",
+        "area_zone": "Shivaji Nagar",
+        "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJC6yhtYDAwjsRafS-OjmL398",
+        "operating_hours": "Open 24 Hours, All Days"
+    },
+    {
+        "hospital_id": "HOS-014",
+        "full_name": "Dr. Deepak Thakur",
+        "hospital_name": "Oyster & Pearl Hospitals",
+        "specialty": "Multi-Specialty (Orthopedics, Gynecology, ACL Surgery, Maternity)",
+        "phone": "+91 20 6721 6600",
+        "area_zone": "Shivaji Nagar",
+        "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJrYWgvXe_wjsRW4WtVRbKPoI",
+        "operating_hours": "Open 24 Hours, All Days"
+    },
+    {
+        "hospital_id": "HOS-015",
+        "full_name": "Dr. Rekha Jain",
+        "hospital_name": "Sahyadri Super Speciality Hospital - Deccan Gymkhana",
+        "specialty": "Multi-Specialty (Neurology, Liver Transplant, Cardiology, Oncology)",
+        "phone": "+91 20 4713 8766",
+        "area_zone": "Deccan Gymkhana",
+        "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJH1XCpYm_wjsRi58ExuGvoeU",
+        "operating_hours": "Open 24 Hours, All Days"
+    },
+    {
+        "hospital_id": "HOS-016",
+        "full_name": "Dr. Mohan Shinde",
+        "hospital_name": "Deenanath Mangeshkar Hospital and Research Center",
+        "specialty": "Multi-Specialty (Cardiology, Neurology, Oncology, Orthopedics, Liver Transplant, 800 Beds)",
+        "phone": "+91 20 4015 1000",
+        "area_zone": "Erandwane",
+        "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJAQAAQPO_wjsR92yvqVBXeIk",
+        "operating_hours": "Open 24 Hours, All Days"
+    },
+    {
+        "hospital_id": "HOS-017",
+        "full_name": "Dr. Usha Kadam",
+        "hospital_name": "Lokmanya Hospital - S B Road",
+        "specialty": "Orthopedics, Joint Replacement, Neurosurgery (First Robotic Joint Replacement in Asia)",
+        "phone": "+91 72193 43223",
+        "area_zone": "S.B. Road / Gokhale Nagar",
+        "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJeYANJrS_wjsRY0YkVecpl9o",
+        "operating_hours": "Open 24 Hours, All Days"
+    },
+    {
+        "hospital_id": "HOS-018",
+        "full_name": "Dr. Nitin Bhosale",
+        "hospital_name": "Sahyadri Hospital Kothrud",
+        "specialty": "Multi-Specialty (Orthopedics, Emergency, General Medicine, Cancer)",
+        "phone": "+91 88888 22222",
+        "area_zone": "Kothrud",
+        "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJ02vPUbe_wjsRaePS-V0YndI",
+        "operating_hours": "Open 24 Hours, All Days"
+    },
+    {
+        "hospital_id": "HOS-019",
+        "full_name": "Dr. Sangita Rao",
+        "hospital_name": "Bharati Hospital",
+        "specialty": "Multi-Specialty (Maternity, Cardiology, Emergency, Eye Surgery, Urology)",
+        "phone": "+91 20 4055 5555",
+        "area_zone": "Dhankawadi / Katraj",
+        "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJHXnTdMfqwjsRZXmanedwbxM",
+        "operating_hours": "Open 24 Hours, All Days"
+    },
+    {
+        "hospital_id": "HOS-020",
+        "full_name": "Dr. Hemant Sathe",
+        "hospital_name": "Lokmanya Hospitals - Swargate",
+        "specialty": "Orthopedics, ACL Surgery, General Surgery",
+        "phone": "+91 93070 76767",
+        "area_zone": "Swargate / Parvati",
+        "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJvVgVGxDAwjsR77gRe0ugvPQ",
+        "operating_hours": "Open 24 Hours, All Days"
+    },
+    {
+        "hospital_id": "HOS-021",
+        "full_name": "Dr. Pallavi Chavan",
+        "hospital_name": "Inamdar Multispecialty Hospital",
+        "specialty": "Multi-Specialty (Maternity, Gynecology, General Surgery, NABH Accredited)",
+        "phone": "+91 20 6681 2222",
+        "area_zone": "Fatima Nagar / Wanowrie",
+        "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJKf94Xc_BwjsRE7ug9R0ZFG4",
+        "operating_hours": "Open 24 Hours, All Days"
+    },
+    {
+        "hospital_id": "HOS-022",
+        "full_name": "Dr. Girish Naik",
+        "hospital_name": "Noble Hospitals & Research Centre",
+        "specialty": "Multi-Specialty (NICU, Gynecology, Orthopedics, General Surgery)",
+        "phone": "+91 80070 06611",
+        "area_zone": "Hadapsar / Magarpatta",
+        "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJTdaDB_HBwjsREqFL_bhVSU8",
+        "operating_hours": "Open 24 Hours, All Days"
+    },
+    {
+        "hospital_id": "HOS-023",
+        "full_name": "Dr. Varsha Gaikwad",
+        "hospital_name": "Sahyadri Super Speciality Hospital - Hadapsar",
+        "specialty": "Multi-Specialty (Orthopedics, Oncology, Cardiac, General Surgery)",
+        "phone": "+91 20 4713 8766",
+        "area_zone": "Hadapsar",
+        "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJ13jtbPfBwjsRq-ooUa9y-u8",
+        "operating_hours": "Open 24 Hours, All Days"
+    },
+    {
+        "hospital_id": "HOS-024",
+        "full_name": "Dr. Santosh More",
+        "hospital_name": "New Pune Hospital",
+        "specialty": "Multi-Specialty (General Surgery, Dental, Emergency, ICU)",
+        "phone": "+91 20 6050 0251",
+        "area_zone": "Kondhwa",
+        "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJ426n3YnqwjsRVztpD-k033U",
+        "operating_hours": "Open 24 Hours, All Days"
+    },
+    {
+        "hospital_id": "HOS-025",
+        "full_name": "Dr. Lata Kulkarni",
+        "hospital_name": "Ruby Hall Clinic - Wanowrie",
+        "specialty": "Multi-Specialty (Gynecology, NICU, Kidney Stone Surgery, Physiotherapy)",
+        "phone": "+91 20 6649 4949",
+        "area_zone": "Wanowrie",
+        "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJ42j99HbqwjsR-JSYNKnCyco",
+        "operating_hours": "Open 24 Hours, All Days"
+    },
+    {
+        "hospital_id": "HOS-026",
+        "full_name": "Dr. Ajay Pawar",
+        "hospital_name": "Bharat Ratna Late Rajeev Gandhi Hospital (PMC)",
+        "specialty": "Government Multi-Specialty (NICU, General Medicine, Health Checkup Packages)",
+        "phone": "OXO",
+        "area_zone": "Yerawada",
+        "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJV-n3ZePAwjsROJwWctfGQnA",
+        "operating_hours": "OPD: Mon-Sat 9:00 AM - 5:00 PM; NICU 24x7"
+    },
+    {
+        "hospital_id": "HOS-027",
+        "full_name": "Dr. Nisha Mane",
+        "hospital_name": "Sahyadri Super Speciality Hospital - Nagar Road",
+        "specialty": "Multi-Specialty (Orthopedics, Gastroscopy, Knee Replacement, Cancer)",
+        "phone": "+91 20 4713 8766",
+        "area_zone": "Nagar Road / Yerawada",
+        "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJdwmjhrXBwjsR5NVuBvruOwg",
+        "operating_hours": "Open 24 Hours, All Days"
+    },
+    {
+        "hospital_id": "HOS-028",
+        "full_name": "Dr. Vinod Jagtap",
+        "hospital_name": "Cloudnine Hospital - Kalyani Nagar",
+        "specialty": "Maternity, NICU, Pregnancy, Pediatrics",
+        "phone": "+91 99728 99728",
+        "area_zone": "Kalyani Nagar",
+        "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJ2bfVqRrBwjsRu7es_KWEDBI",
+        "operating_hours": "Open 24 Hours, All Days"
+    },
+    {
+        "hospital_id": "HOS-029",
+        "full_name": "Dr. Sonal Salvi",
+        "hospital_name": "NM Medical (Diagnostic & Health Checkup)",
+        "specialty": "Diagnostics (MRI 3T, Full Body Checkup, Biopsy, Sonography)",
+        "phone": "+91 84088 61501",
+        "area_zone": "Kalyani Nagar",
+        "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJ6R5tQw7BwjsRenKnsnXJOwM",
+        "operating_hours": "Mon-Sat: 7:00 AM - 10:00 PM; Sun: 8:00 AM - 5:00 PM"
+    },
+    {
+        "hospital_id": "HOS-030",
+        "full_name": "Dr. Ramesh Kale",
+        "hospital_name": "Vijaya PH Diagnostic Centre",
+        "specialty": "Diagnostics (MRI 3T, Radiology, Pathology, Health Checkups)",
+        "phone": "+91 92402 22222",
+        "area_zone": "Kalyani Nagar",
+        "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJw3zLJAbBwjsRTNmcz2Pl5eQ",
+        "operating_hours": "Mon-Sat: 7:00 AM - 9:00 PM; Sun: 8:00 AM - 5:00 PM"
+    },
+    {
+        "hospital_id": "HOS-031",
+        "full_name": "Dr. Madhuri Khot",
+        "hospital_name": "Dr. Sushma Yevale - Adarsh Nursing Home",
+        "specialty": "Gynaecology, Maternity, Infertility, Fetal Medicine, Andrology",
+        "phone": "+91 93257 84563",
+        "area_zone": "Nagar Road / Kalyani Nagar",
+        "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJ__8_cRnBwjsRJjg_oEZjnCc",
+        "operating_hours": "Open 24 Hours, All Days"
+    },
+    {
+        "hospital_id": "HOS-032",
+        "full_name": "Dr. Dilip Shirke",
+        "hospital_name": "K K Eye Institute",
+        "specialty": "Ophthalmology (Cataract Surgery, Pediatric Eye Care, Eye Checkups)",
+        "phone": "+91 20 6609 9888",
+        "area_zone": "Koregaon Park",
+        "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJ2bE-tv_AwjsRPU7eILq9S4M",
+        "operating_hours": "Mon-Sat: 8:00 AM - 7:00 PM; Sun: 8:30 AM - 3:00 PM"
+    },
+    {
+        "hospital_id": "HOS-033",
+        "full_name": "Dr. Archana Limaye",
+        "hospital_name": "Inlaks and Budhrani Hospital",
+        "specialty": "Multi-Specialty (ICU, Cardiac, Cancer Radiation, Dental, General Medicine)",
+        "phone": "+91 20 6609 9999",
+        "area_zone": "Koregaon Park",
+        "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJN-jEyv_AwjsR99DoapBdIe4",
+        "operating_hours": "Open 24 Hours, All Days"
+    },
+    {
+        "hospital_id": "HOS-034",
+        "full_name": "Dr. Manoj Kamble",
+        "hospital_name": "Fabiani & Budhrani Heart Institute",
+        "specialty": "Cardiac Surgery (Open Heart Surgery, Angioplasty, Bypass Surgery)",
+        "phone": "OXO",
+        "area_zone": "Koregaon Park",
+        "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJyV1Wx__AwjsRilOdbSAqYK0",
+        "operating_hours": "Open 24 Hours, All Days"
+    },
+    {
+        "hospital_id": "HOS-035",
+        "full_name": "Dr. Rohini Gadkari",
+        "hospital_name": "QI Spine Clinic",
+        "specialty": "Spine & Physiotherapy (Scoliosis, Lumbar Lordosis, Back Pain, Rehabilitation)",
+        "phone": "+91 81080 08844",
+        "area_zone": "Koregaon Park",
+        "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJWdmFUQbBwjsRv2ffKjUFrJ0",
+        "operating_hours": "Mon-Sat: 7:00 AM - 9:00 PM; Sun: 10:00 AM - 6:00 PM"
+    },
+    {
+        "hospital_id": "HOS-036",
+        "full_name": "Dr. Tushar Bapat",
+        "hospital_name": "Apollo Clinic - Viman Nagar",
+        "specialty": "Multi-Specialty Clinic (Gynecology, Diagnostics, Physiotherapy, Full Body Checkup)",
+        "phone": "+91 1800 103 1010",
+        "area_zone": "Viman Nagar",
+        "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJ9a6DR0fBwjsRfu-a25FMWME",
+        "operating_hours": "Mon-Sat: 7:00 AM - 9:30 PM; Sun: 8:00 AM - 5:00 PM"
+    },
+    {
+        "hospital_id": "HOS-037",
+        "full_name": "Dr. Shweta Pendse",
+        "hospital_name": "Healing Touch Multispeciality Clinic (HTMC)",
+        "specialty": "Multi-Specialty Clinic (Orthopedics, Dermatology, Homeopathy)",
+        "phone": "+91 87660 40790",
+        "area_zone": "Viman Nagar",
+        "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJKVMfbLDBwjsR-zAmOlN9xJA",
+        "operating_hours": "Mon-Sat: 9:00 AM - 10:00 PM; Sun: Closed"
+    },
+    {
+        "hospital_id": "HOS-038",
+        "full_name": "Dr. Krishnarao Vaidya",
+        "hospital_name": "Jeewan Jyot Multi-Speciality Medicare Centre",
+        "specialty": "Multi-Specialty Clinic (General Medicine, Gynaecology, Dental, Diagnostics)",
+        "phone": "+91 20 2663 0708",
+        "area_zone": "Viman Nagar",
+        "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJTxVsFEfBwjsRKMAZfqThKcg",
+        "operating_hours": "Mon-Sun: 8:00 AM - 9:30 PM"
+    },
+    {
+        "hospital_id": "HOS-039",
+        "full_name": "Dr. Manjiri Tambe",
+        "hospital_name": "Life Care Clinic (Gynaecology & PCOD)",
+        "specialty": "Gynaecology (PCOD/PCOS, Urine Infection, Hormonal Imbalance, Maternity)",
+        "phone": "+91 77986 46925",
+        "area_zone": "Viman Nagar / Kharadi",
+        "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJvaOzuEfBwjsR4r7LHVcwtu0",
+        "operating_hours": "Mon-Sun: 10:00 AM - 2:30 PM, 5:00 PM - 9:00 PM"
+    },
+    {
+        "hospital_id": "HOS-040",
+        "full_name": "Dr. Sachin Datar",
+        "hospital_name": "RyseWell Multispeciality Hospital",
+        "specialty": "Multi-Specialty (Homeopathy, Orthopedics, Emergency, ICU)",
+        "phone": "+91 77098 62164",
+        "area_zone": "Viman Nagar / Kharadi",
+        "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJcdh8fADBwjsRmf3hCCl2h1c",
+        "operating_hours": "Open 24 Hours, All Days"
+    },
+    {
+        "hospital_id": "HOS-041",
+        "full_name": "Dr. Vandana Panse",
+        "hospital_name": "Manipal Hospital - Kharadi (formerly Columbia Asia)",
+        "specialty": "Multi-Specialty (Radiology, Knee Replacement, Cardiology, General Surgery)",
+        "phone": "+91 20 6165 6666",
+        "area_zone": "Kharadi",
+        "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJfwlxH37BwjsROeG41SeLErg",
+        "operating_hours": "Open 24 Hours, All Days"
+    },
+    {
+        "hospital_id": "HOS-042",
+        "full_name": "Dr. Milind Chitale",
+        "hospital_name": "Apollo Clinic - Kharadi",
+        "specialty": "Multi-Specialty Clinic (Physician, X-Ray, Blood Tests, Pharmacy, Psychiatry)",
+        "phone": "+91 1860 500 7788",
+        "area_zone": "Kharadi",
+        "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJ219Xj9jDwjsRMws8ZKBZ4Xg",
+        "operating_hours": "Mon-Sat: 7:30 AM - 8:00 PM; Sun: 8:00 AM - 4:30 PM"
+    },
+    {
+        "hospital_id": "HOS-043",
+        "full_name": "Dr. Ashwini Gosavi",
+        "hospital_name": "Rising Medicare Hospital and IVF Center",
+        "specialty": "Multi-Specialty (Gynecology, IVF, NICU, Maternity, Hysteroscopy)",
+        "phone": "+91 91195 87272",
+        "area_zone": "Kharadi",
+        "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJTRpALtnDwjsROT2rFt3NwSQ",
+        "operating_hours": "Open 24 Hours, All Days"
+    },
+    {
+        "hospital_id": "HOS-044",
+        "full_name": "Dr. Pravin Badhe",
+        "hospital_name": "Medipoint Hospital - Chandan Nagar",
+        "specialty": "Multi-Specialty (Maternity, Pediatrics, General Surgery, ICU)",
+        "phone": "+91 98228 34442",
+        "area_zone": "Chandan Nagar / Kharadi",
+        "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJXVszRVzBwjsRXpnBvtHCU0I",
+        "operating_hours": "Open 24 Hours, All Days"
+    },
+    {
+        "hospital_id": "HOS-045",
+        "full_name": "Dr. Bharati Tilak",
+        "hospital_name": "Jupiter Hospital",
+        "specialty": "Multi-Specialty (Maternity, NICU, Cardiology, General Surgery)",
+        "phone": "+91 20 6637 5555",
+        "area_zone": "Baner",
+        "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJq6qqWtK-wjsRB3ipyUrXw0s",
+        "operating_hours": "Open 24 Hours, All Days"
+    },
+    {
+        "hospital_id": "HOS-046",
+        "full_name": "Dr. Yogesh Marathe",
+        "hospital_name": "Manipal Hospitals - Baner",
+        "specialty": "Multi-Specialty (Maternity, Cardiology, Endocrinology, NABH & NABL Accredited)",
+        "phone": "+91 20 6813 8888",
+        "area_zone": "Baner",
+        "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJn3azDB-_wjsRFm-Kxwuim2Q",
+        "operating_hours": "Open 24 Hours, All Days"
+    },
+    {
+        "hospital_id": "HOS-047",
+        "full_name": "Dr. Chhaya Ranade",
+        "hospital_name": "Baner Multi-Speciality Hospital",
+        "specialty": "Multi-Specialty (Physician, Orthopedics, Urology, Pediatrics, Emergency Surgery)",
+        "phone": "+91 80070 09638",
+        "area_zone": "Baner",
+        "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJNfO_5fS_wjsRxc3IgTDFLpo",
+        "operating_hours": "Open 24 Hours, All Days"
+    },
+    {
+        "hospital_id": "HOS-048",
+        "full_name": "Dr. Shrikant Oak",
+        "hospital_name": "Sanjivani Clinic",
+        "specialty": "General Medicine, Family Medicine Clinic",
+        "phone": "+91 99229 68795",
+        "area_zone": "Baner",
+        "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJc5uuAuK_wjsR59VQRpypDUI",
+        "operating_hours": "Mon-Sun: 11:00 AM - 1:00 PM, 6:00 PM - 9:00 PM"
+    },
+    {
+        "hospital_id": "HOS-049",
+        "full_name": "Dr. Ujwala Kulkarni",
+        "hospital_name": "Healing Health Clinic",
+        "specialty": "General Medicine, Dermatology, Skin Care",
+        "phone": "+91 84829 09583",
+        "area_zone": "Baner",
+        "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJbalMOzW_wjsRYvFIyzJkcIk",
+        "operating_hours": "Mon-Sun: 9:00 AM - 10:00 PM"
+    },
+    {
+        "hospital_id": "HOS-050",
+        "full_name": "Dr. Narayan Joglekar",
+        "hospital_name": "Vitalife Clinic",
+        "specialty": "General Medicine, Diagnostics, Full Body Checkup, Lab Services",
+        "phone": "+91 89285 00300",
+        "area_zone": "Baner / Balewadi",
+        "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJyUoI_s2-wjsRdW8BbcS4_i8",
+        "operating_hours": "Mon-Sat: 7:30 AM - 9:30 PM; Sun: 8:00 AM - 1:00 PM"
+    },
+    {
+        "hospital_id": "HOS-051",
+        "full_name": "Dr. Alka Potdar",
+        "hospital_name": "Umarji Mother and Child Care Hospital",
+        "specialty": "Maternity, Gynecology, Pediatrics, Neonatology, Speech Therapy",
+        "phone": "+91 20 3503 2200",
+        "area_zone": "Baner / Balewadi",
+        "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJ6RkI7DK5wjsR5_U7MDh5N_I",
+        "operating_hours": "Open 24 Hours, All Days"
+    },
+    {
+        "hospital_id": "HOS-052",
+        "full_name": "Dr. Dnyanesh Phadtare",
+        "hospital_name": "SaiShree Vitalife Hospital",
+        "specialty": "Orthopedics, Joint Replacement, Spine Surgery, Hip & Knee Replacement",
+        "phone": "+91 20 6744 8600",
+        "area_zone": "Aundh",
+        "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJi0PY8y-_wjsRck_nYefLQF8",
+        "operating_hours": "Open 24 Hours, All Days"
+    },
+    {
+        "hospital_id": "HOS-053",
+        "full_name": "Dr. Mrunali Phadke",
+        "hospital_name": "Sanjivani Shashwat Hospital",
+        "specialty": "Multi-Specialty (General Medicine, Homeopathy, Emergency, Physiotherapy)",
+        "phone": "+91 20 6729 6464",
+        "area_zone": "Aundh",
+        "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJp5bAYi-_wjsRetgDZsF7TgY",
+        "operating_hours": "Open 24 Hours, All Days"
+    },
+    {
+        "hospital_id": "HOS-054",
+        "full_name": "Dr. Vilas Sane",
+        "hospital_name": "Sanjivani Medipoint Hospital",
+        "specialty": "Multi-Specialty (Maternity, Orthopedics, Sonography, ICU, Physiotherapy)",
+        "phone": "+91 20 6764 3200",
+        "area_zone": "Aundh",
+        "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJia4wmC6_wjsRotLFPWlST1M",
+        "operating_hours": "Open 24 Hours, All Days"
+    },
+    {
+        "hospital_id": "HOS-055",
+        "full_name": "Dr. Namrata Bhide",
+        "hospital_name": "Olive Health Center",
+        "specialty": "General Medicine Clinic (Family Physician, Holistic Care)",
+        "phone": "+91 75586 50249",
+        "area_zone": "Viman Nagar / Clover Park",
+        "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJb-CZoEfBwjsRFwETJdvOTGw",
+        "operating_hours": "Mon-Sat: 9:00 AM - 9:00 PM; Sun: 10:00 AM - 6:00 PM"
+    },
+    {
+        "hospital_id": "HOS-056",
+        "full_name": "Dr. Kiran Kelkar",
+        "hospital_name": "Symbiosis University Hospital & Research Centre",
+        "specialty": "Multi-Specialty (Oncology, Chemotherapy, General Surgery, Pediatrics)",
+        "phone": "+91 20 6193 0000",
+        "area_zone": "Lavale / Mulshi (Near Hinjawadi)",
+        "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJlc6cD129wjsRYmAb6IMmaN0",
+        "operating_hours": "Open 24 Hours, All Days"
+    },
+    {
+        "hospital_id": "HOS-057",
+        "full_name": "Dr. Swati Mahajan",
+        "hospital_name": "Ruby Hall Clinic - Hinjawadi",
+        "specialty": "Multi-Specialty (Health Checkup, Gynecology, General Medicine, Diagnostics)",
+        "phone": "+91 20 6699 9999",
+        "area_zone": "Hinjawadi",
+        "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJU3NVE8O7wjsRM3sUU-8D4tY",
+        "operating_hours": "Open 24 Hours, All Days"
+    },
+    {
+        "hospital_id": "HOS-058",
+        "full_name": "Dr. Amol Ghate",
+        "hospital_name": "Aditya Birla Memorial Hospital",
+        "specialty": "Multi-Specialty (PET-CT, Gynecology, Ophthalmology, Radiology, Cardiology)",
+        "phone": "+91 98811 23006",
+        "area_zone": "Chinchwad / Thergaon",
+        "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJU6Ju9J25wjsRwR_ajs0TMOg",
+        "operating_hours": "Open 24 Hours, All Days"
+    },
+    {
+        "hospital_id": "HOS-059",
+        "full_name": "Dr. Prabha Karve",
+        "hospital_name": "Lokmanya Hospital - Chinchwad",
+        "specialty": "Orthopedics, Ligament Surgery, Knee Replacement",
+        "phone": "+91 98819 85453",
+        "area_zone": "Chinchwad",
+        "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJG341wbW5wjsRC8JwIP4DZvY",
+        "operating_hours": "Open 24 Hours, All Days"
+    },
+    {
+        "hospital_id": "HOS-060",
+        "full_name": "Dr. Sanjay Deshpande",
+        "hospital_name": "Ruby Hall Clinic PCMC - Pimple Saudagar",
+        "specialty": "General Medicine, Cardiology OPD, Diagnostics",
+        "phone": "+91 20 2720 1717",
+        "area_zone": "Pimple Saudagar / PCMC",
+        "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJXVVVRW65wjsRnT8cPhCKkGA",
+        "operating_hours": "Mon-Sat: 8:00 AM - 8:00 PM"
+    },
+    {
+        "hospital_id": "HOS-061",
+        "full_name": "Dr. Geeta Chaphekar",
+        "hospital_name": "Lokmanya Hospital - Nigdi",
+        "specialty": "Orthopedics, Joint Replacement, Abdominal Surgery",
+        "phone": "+91 98811 42101",
+        "area_zone": "Nigdi / Pimpri-Chinchwad",
+        "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJo9Vu_VC5wjsR7vvLrP6V6T8",
+        "operating_hours": "Open 24 Hours, All Days"
+    }
+]

@@ -1,0 +1,366 @@
+"use client"
+
+import React, { useState, useRef, useEffect } from "react"
+import { Send, Bot, User, Sparkles, ImagePlus, AlertTriangle, X } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { cn } from "@/lib/utils"
+import { BACKEND_URL } from "@/lib/backend"
+
+function patientPayloadFromSession() {
+  if (typeof window === "undefined") return undefined
+  try {
+    const raw = sessionStorage.getItem("swasthya-user")
+    if (!raw) return undefined
+    const u = JSON.parse(raw) as Record<string, unknown>
+    return {
+      age: typeof u.age === "number" ? u.age : undefined,
+      gender: typeof u.gender === "string" ? u.gender : undefined,
+      weight_kg:
+        typeof u.weight_kg === "number"
+          ? u.weight_kg
+          : typeof u.weight === "number"
+            ? u.weight
+            : undefined,
+      height_cm:
+        typeof u.height_cm === "number"
+          ? u.height_cm
+          : typeof u.height === "number"
+            ? u.height
+            : undefined,
+      location: typeof u.location === "string" ? u.location : "Pune, Maharashtra",
+      conditions: Array.isArray(u.conditions) ? (u.conditions as string[]) : [],
+    }
+  } catch {
+    return undefined
+  }
+}
+
+interface Message {
+  id: string
+  role: "user" | "assistant"
+  content: string
+  timestamp: Date
+  image?: string
+}
+
+export function AskAgent() {
+  const [messages, setMessages] = useState<Message[]>([])
+  const [isHydrated, setIsHydrated] = useState(false)
+  const [input, setInput] = useState("")
+  const [isTyping, setIsTyping] = useState(false)
+  const [showDisclaimer, setShowDisclaimer] = useState(false)
+  const [selectedImage, setSelectedImage] = useState<string | null>(null)
+  const messagesEndRef = useRef<HTMLDivElement>(null)
+  const inputRef = useRef<HTMLTextAreaElement>(null)
+  const fileInputRef = useRef<HTMLInputElement>(null)
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
+  }
+
+  useEffect(() => {
+    scrollToBottom()
+  }, [messages])
+
+  // Initialize messages only on client side to avoid hydration mismatch
+  useEffect(() => {
+    setMessages([
+      {
+        id: "1",
+        role: "assistant",
+        content: "Namaste! I am Swasthya Mitra, your digital health assistant. You can describe your symptoms or ask any health-related questions. How may I assist you today?",
+        timestamp: new Date(),
+      },
+    ])
+    setIsHydrated(true)
+  }, [])
+
+  // Show disclaimer on first visit to chat tab
+  useEffect(() => {
+    const hasSeenDisclaimer = sessionStorage.getItem("swasthya-mitra-disclaimer")
+    if (!hasSeenDisclaimer) {
+      setShowDisclaimer(true)
+    }
+  }, [])
+
+  const handleDisclaimerAccept = () => {
+    sessionStorage.setItem("swasthya-mitra-disclaimer", "true")
+    setShowDisclaimer(false)
+  }
+
+  const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (file) {
+      const reader = new FileReader()
+      reader.onloadend = () => {
+        setSelectedImage(reader.result as string)
+      }
+      reader.readAsDataURL(file)
+    }
+  }
+
+  const removeSelectedImage = () => {
+    setSelectedImage(null)
+    if (fileInputRef.current) {
+      fileInputRef.current.value = ""
+    }
+  }
+
+  const handleSend = async () => {
+    if ((!input.trim() && !selectedImage) || isTyping) return
+
+    const symptoms = input.trim()
+    const userMessage: Message = {
+      id: Date.now().toString(),
+      role: "user",
+      content: symptoms || "Shared an image",
+      timestamp: new Date(),
+      image: selectedImage || undefined,
+    }
+
+    setMessages((prev: Message[]) => [...prev, userMessage])
+    setInput("")
+    setSelectedImage(null)
+    if (fileInputRef.current) {
+      fileInputRef.current.value = ""
+    }
+    setIsTyping(true)
+
+    try {
+      const patient = patientPayloadFromSession()
+      const response = await fetch(`${BACKEND_URL}/chat`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          symptoms,
+          ...(patient ? { patient } : {}),
+        }),
+      })
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok")
+      }
+      const data = await response.json()
+
+      let displayText = ""
+      if (typeof data === "object") {
+        displayText = `Probable Ailment: ${data.probable_ailment}\nCare Points: ${data.care_points}\nRecommended Specialist: ${data.recommended_specialist}`
+      } else {
+        displayText = JSON.stringify(data, null, 2)
+      }
+
+      const assistantMessage: Message = {
+        id: (Date.now() + 1).toString(),
+        role: "assistant",
+        content: displayText,
+        timestamp: new Date(),
+      }
+
+      setMessages((prev: Message[]) => [...prev, assistantMessage])
+    } catch {
+      const assistantMessage: Message = {
+        id: (Date.now() + 1).toString(),
+        role: "assistant",
+        content: "Sorry, I couldn't connect to the SwasthyaLink server. Please try again.",
+        timestamp: new Date(),
+      }
+      setMessages((prev: Message[]) => [...prev, assistantMessage])
+    } finally {
+      setIsTyping(false)
+    }
+  }
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault()
+      handleSend()
+    }
+  }
+
+  return (
+    <div className="flex flex-col h-full w-full relative">
+      {/* Disclaimer Modal */}
+      {showDisclaimer && (
+        <div className="absolute inset-0 z-50 flex items-center justify-center bg-foreground/60 backdrop-blur-sm">
+          <div className="bg-card border border-border rounded-lg shadow-xl mx-4 max-w-sm w-full overflow-hidden">
+            <div className="bg-accent/20 p-3 flex items-center gap-2 border-b border-border">
+              <div className="w-8 h-8 rounded-full bg-accent flex items-center justify-center">
+                <AlertTriangle className="h-4 w-4 text-accent-foreground" />
+              </div>
+              <h3 className="text-sm font-semibold text-foreground">Important Disclaimer</h3>
+            </div>
+            <div className="p-4">
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Swasthya Mitra is an <span className="font-medium text-foreground">AI-powered prediction software</span> that provides general health guidance based on the symptoms you describe.
+              </p>
+              <div className="mt-3 p-2.5 bg-destructive/10 rounded-md border border-destructive/20">
+                <p className="text-sm text-destructive font-medium">
+                  This is not a substitute for professional medical advice, diagnosis, or treatment. For proper consultation, please visit a qualified healthcare provider.
+                </p>
+              </div>
+              <Button
+                onClick={handleDisclaimerAccept}
+                className="w-full mt-4 bg-primary hover:bg-primary/90 text-primary-foreground text-xs h-9"
+              >
+                I Understand
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Compact Chat Header */}
+      <div className="flex items-center gap-2 px-4 py-2 border-b border-border bg-card">
+        <div className="relative">
+          <div className="w-7 h-7 rounded-full bg-primary/10 flex items-center justify-center">
+            <Sparkles className="h-3.5 w-3.5 text-primary" />
+          </div>
+          <span className="absolute -bottom-0.5 -right-0.5 w-2 h-2 bg-secondary rounded-full border border-card" />
+        </div>
+        <div className="flex-1">
+          <p className="text-[10px] text-muted-foreground">AI Health Assistant • Online</p>
+        </div>
+      </div>
+
+      {/* Messages - Full Width */}
+      <div className="flex-1 overflow-y-auto py-3 px-4 bg-muted/20">
+        <div className="space-y-3 w-full">
+          {messages.map((message: Message) => (
+            <div
+              key={message.id}
+              className={cn(
+                "flex gap-2",
+                message.role === "user" ? "flex-row-reverse" : "flex-row"
+              )}
+            >
+              <div
+                className={cn(
+                  "flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center",
+                  message.role === "user" ? "bg-accent" : "bg-primary"
+                )}
+              >
+                {message.role === "user" ? (
+                  <User className="h-3 w-3 text-accent-foreground" />
+                ) : (
+                  <Bot className="h-3 w-3 text-primary-foreground" />
+                )}
+              </div>
+              <div
+                className={cn(
+                  "max-w-[85%] rounded-2xl px-3 py-2",
+                  message.role === "user"
+                    ? "bg-primary text-primary-foreground rounded-tr-sm"
+                    : "bg-card text-foreground border border-border rounded-tl-sm shadow-sm"
+                )}
+              >
+                {message.image && (
+                  <img
+                    src={message.image}
+                    alt="Uploaded"
+                    className="max-w-full h-auto rounded-lg mb-2 max-h-32 object-cover"
+                  />
+                )}
+                <p className="text-sm md:text-base whitespace-pre-line leading-relaxed">{message.content}</p>
+                {isHydrated && (
+                  <p
+                    className={cn(
+                      "text-[9px] mt-1",
+                      message.role === "user" ? "text-primary-foreground/60" : "text-muted-foreground"
+                    )}
+                  >
+                    {message.timestamp.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+                  </p>
+                )}
+              </div>
+            </div>
+          ))}
+
+          {isTyping && (
+            <div className="flex gap-2">
+              <div className="flex-shrink-0 w-6 h-6 rounded-full bg-primary flex items-center justify-center">
+                <Bot className="h-3 w-3 text-primary-foreground" />
+              </div>
+              <div className="bg-card border border-border rounded-2xl rounded-tl-sm px-3 py-2.5 shadow-sm">
+                <div className="flex gap-1">
+                  <span className="w-1.5 h-1.5 bg-primary/60 rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
+                  <span className="w-1.5 h-1.5 bg-primary/60 rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
+                  <span className="w-1.5 h-1.5 bg-primary/60 rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
+                </div>
+              </div>
+            </div>
+          )}
+
+          <div ref={messagesEndRef} />
+        </div>
+      </div>
+
+      {/* Input Area - Aligned */}
+      <div className="border-t border-border bg-card px-4 py-2.5">
+        {/* Selected Image Preview */}
+        {selectedImage && (
+          <div className="mb-2 relative inline-block">
+            <img
+              src={selectedImage}
+              alt="Selected"
+              className="h-16 w-auto rounded-lg border border-border object-cover"
+            />
+            <button
+              onClick={removeSelectedImage}
+              className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-destructive text-destructive-foreground flex items-center justify-center shadow-sm"
+            >
+              <X className="h-3 w-3" />
+            </button>
+          </div>
+        )}
+        
+        <div className="flex items-center gap-2">
+          {/* Image Upload Button */}
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*"
+            onChange={handleImageSelect}
+            className="hidden"
+          />
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon"
+            onClick={() => fileInputRef.current?.click()}
+            className="h-9 w-9 flex-shrink-0 rounded-full text-muted-foreground hover:text-foreground hover:bg-muted"
+          >
+            <ImagePlus className="h-4 w-4" />
+          </Button>
+
+          {/* Text Input */}
+          <textarea
+            ref={inputRef}
+            value={input}
+            onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setInput(e.target.value)}
+            onKeyDown={handleKeyDown}
+            placeholder="Describe your symptoms..."
+            rows={1}
+            className="flex-1 resize-none rounded-full border border-border bg-muted/50 px-3.5 py-2 text-sm md:text-base text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-primary/40 focus:border-primary transition-all"
+            style={{ minHeight: "36px", maxHeight: "72px" }}
+          />
+
+          {/* Send Button - Aligned */}
+          <Button
+            onClick={handleSend}
+            disabled={(!input.trim() && !selectedImage) || isTyping}
+            size="icon"
+            className="h-9 w-9 flex-shrink-0 rounded-full bg-primary hover:bg-primary/90 text-primary-foreground shadow-sm disabled:opacity-40"
+          >
+            <Send className="h-4 w-4" />
+          </Button>
+        </div>
+        
+        <p className="text-[9px] text-muted-foreground mt-2 text-center">
+          AI predictions only • Not medical advice
+        </p>
+      </div>
+    </div>
+  )
+}

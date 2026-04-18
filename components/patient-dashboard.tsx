@@ -20,6 +20,7 @@ import {
   FileText,
   Heart,
   Clock,
+  Activity,
 } from "lucide-react"
 
 interface PatientDashboardProps {
@@ -233,6 +234,23 @@ export function PatientDashboard({ onBack }: PatientDashboardProps) {
                       </p>
                       <p className="text-sm text-foreground leading-relaxed">{record.doctorAdvice}</p>
                     </div>
+
+                    {/* Vitals (if present) */}
+                    {record.vitals && Object.keys(record.vitals).length > 0 && (
+                      <div className="p-4 bg-background rounded-xl border border-border/50 lg:col-span-2">
+                        <p className="text-xs font-semibold text-accent uppercase tracking-wide mb-2 flex items-center gap-1.5">
+                          <Activity className="w-3.5 h-3.5" />
+                          Vitals
+                        </p>
+                        <div className="flex flex-wrap gap-4 text-sm text-foreground">
+                          {record.vitals.bp && <div><span className="text-muted-foreground mr-1">BP:</span> {record.vitals.bp}</div>}
+                          {record.vitals.heartRate && <div><span className="text-muted-foreground mr-1">HR:</span> {record.vitals.heartRate}</div>}
+                          {record.vitals.spo2 && <div><span className="text-muted-foreground mr-1">SpO2:</span> {record.vitals.spo2}</div>}
+                          {record.vitals.temperature && <div><span className="text-muted-foreground mr-1">Temp:</span> {record.vitals.temperature}</div>}
+                          {record.vitals.weight && <div><span className="text-muted-foreground mr-1">Weight:</span> {record.vitals.weight}</div>}
+                        </div>
+                      </div>
+                    )}
                   </div>
 
                   {/* Prescription */}
@@ -241,14 +259,21 @@ export function PatientDashboard({ onBack }: PatientDashboardProps) {
                       <Pill className="w-3.5 h-3.5" />
                       Prescription
                     </p>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       {record.prescription?.map((med, medIndex) => (
                         <div
                           key={medIndex}
-                          className="flex items-start gap-2 text-sm text-foreground bg-background/60 rounded-lg p-2"
+                          className="flex flex-col gap-1 text-sm text-foreground bg-background/60 rounded-lg p-2.5 border border-border/40"
                         >
-                          <ClipboardList className="w-4 h-4 mt-0.5 text-secondary flex-shrink-0" />
-                          <span>{med}</span>
+                          <div className="flex items-start gap-2 font-medium">
+                            <ClipboardList className="w-4 h-4 mt-0.5 text-secondary flex-shrink-0" />
+                            <span>{med.medicineName}</span>
+                          </div>
+                          <div className="flex gap-2 text-xs text-muted-foreground pl-6">
+                            <span>{med.timing}</span>
+                            <span>•</span>
+                            <span>{med.meal}</span>
+                          </div>
                         </div>
                       ))}
                     </div>

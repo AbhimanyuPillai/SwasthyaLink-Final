@@ -2,6 +2,20 @@
 
 import { createContext, useContext, useState, type ReactNode } from "react"
 
+export interface Vitals {
+  bp?: string
+  spo2?: string
+  heartRate?: string
+  temperature?: string
+  weight?: string
+}
+
+export interface PrescriptionItem {
+  medicineName: string
+  timing: string
+  meal: string
+}
+
 export interface MedicalRecord {
   id: string
   date?: string
@@ -10,7 +24,8 @@ export interface MedicalRecord {
   symptoms?: string
   diagnosis?: string
   doctorAdvice?: string
-  prescription?: string[]
+  prescription?: PrescriptionItem[]
+  vitals?: Vitals
 }
 
 export interface Patient {
@@ -54,7 +69,12 @@ const mockPatients: Patient[] = [
         symptoms: "Fever, headache, body pain",
         diagnosis: "Viral Fever",
         doctorAdvice: "Rest for 3 days, drink plenty of fluids, avoid cold food",
-        prescription: ["Paracetamol 500mg - twice daily", "Cetirizine 10mg - once at night", "ORS packets - as needed"],
+        prescription: [
+          { medicineName: "Paracetamol 500mg", timing: "Twice a day", meal: "After Meal" },
+          { medicineName: "Cetirizine 10mg", timing: "Once at night", meal: "After Meal" },
+          { medicineName: "ORS packets", timing: "As Needed", meal: "Anytime" }
+        ],
+        vitals: { bp: "120/80 mmHg", spo2: "98%", heartRate: "82 bpm", temperature: "101.5°F", weight: "75 kg" }
       },
       {
         id: "rec-002",
@@ -64,7 +84,12 @@ const mockPatients: Patient[] = [
         symptoms: "Cough, cold, sore throat",
         diagnosis: "Upper Respiratory Tract Infection",
         doctorAdvice: "Warm water gargle, steam inhalation, avoid cold drinks",
-        prescription: ["Azithromycin 500mg - once daily for 3 days", "Cough syrup - 10ml thrice daily", "Vitamin C tablets - once daily"],
+        prescription: [
+          { medicineName: "Azithromycin 500mg", timing: "Once a day", meal: "After Meal" },
+          { medicineName: "Cough syrup 10ml", timing: "Thrice a day", meal: "Anytime" },
+          { medicineName: "Vitamin C", timing: "Once a day", meal: "After Meal" }
+        ],
+        vitals: { bp: "118/76 mmHg", spo2: "99%", temperature: "99.1°F" }
       },
     ],
   },
@@ -86,7 +111,11 @@ const mockPatients: Patient[] = [
         symptoms: "Stomach pain, nausea, loss of appetite",
         diagnosis: "Gastritis",
         doctorAdvice: "Avoid spicy food, eat small frequent meals, no smoking or alcohol",
-        prescription: ["Pantoprazole 40mg - before breakfast", "Domperidone 10mg - before meals", "Antacid gel - as needed"],
+        prescription: [
+          { medicineName: "Pantoprazole 40mg", timing: "Once a day", meal: "Before Meal" },
+          { medicineName: "Domperidone 10mg", timing: "Twice a day", meal: "Before Meal" },
+          { medicineName: "Antacid gel", timing: "As Needed", meal: "Anytime" }
+        ],
       },
     ],
   },

@@ -397,9 +397,9 @@ export function AskAgent() {
       const baseInstruction = `System Instruction:
 1. ALWAYS consider the patient's full profile details (height, weight, pre-existing conditions like diabetes, BP, etc.) stored in the database.
 2. EMERGENCY: If the symptoms combined with health history point to an emergency, immediately provide critical life-saving instructions and recommend emergency actions in 'care_points'. Do NOT ask follow-ups in this case.
-3. FOLLOW-UPS: If it is NOT an emergency, FIRST ask short, direct follow-up questions to gather necessary information before making a clear diagnosis.
-4. DETAILED ANALYSIS: In your response, explicitly state the processing you have done (e.g. "Considering your weight of X kg and history of high BP...").
-If you are constrained to return JSON with {probable_ailment, recommended_specialist, care_points}, put your conversational analysis and follow-up questions directly inside the 'care_points' string, and set probable_ailment and recommended_specialist to "Pending" until you have enough information for a final diagnosis.`
+3. FOLLOW-UPS: If it is NOT an emergency, FIRST ask a simple one-line follow-up question to gather necessary information before making a clear diagnosis. Do NOT include your internal analysis or generic advice when asking a follow-up. Just ask the question naturally.
+4. FINAL DIAGNOSIS: After 2-3 questions, when you have good assurance about the diagnosis, provide a detailed analysis (explicitly stating factors like "Considering your weight of X kg..."), and a final diagnosis along with healthcare suggestions.
+If you are constrained to return JSON with {probable_ailment, recommended_specialist, care_points}, put your one-line follow-up question (or your final detailed analysis) directly inside the 'care_points' string. For follow-ups, set probable_ailment and recommended_specialist exactly to "Pending".`
 
       const enrichedSymptoms = symptoms 
         ? `${baseInstruction}\n\nUser Input: ${symptoms}\n[If an image is provided, analyze it carefully for visual symptoms.]`
@@ -435,9 +435,9 @@ If you are constrained to return JSON with {probable_ailment, recommended_specia
         displayText = String(data)
       }
 
-      // 2. Fetch hospital suggestions using GPS coords + specialist keyword
+      // 2. Fetch hospital suggestions using GPS coords + specialist keyword ONLY if not pending
       let hospitals: Hospital[] = []
-      if (chatData?.recommended_specialist) {
+      if (chatData?.recommended_specialist && chatData.recommended_specialist.toLowerCase() !== "pending") {
         hospitals = await fetchHospitalSuggestions(
           chatData.recommended_specialist,
           symptoms,

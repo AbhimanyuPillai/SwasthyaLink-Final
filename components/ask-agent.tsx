@@ -394,12 +394,24 @@ export function AskAgent() {
         ...(m.image ? { image: m.image } : {})
       }))
       
+      // Count how many times the user has sent a message
+      // Note: we're evaluating this *before* pushing the current userMessage, 
+      // but wait, `messages` doesn't include the current message yet because React state hasn't updated.
+      // So if `messages` already has 1 user message, the current one makes it 2!
+      const pastUserMessagesCount = messages.filter(m => m.role === "user").length
+      // Current message makes it pastUserMessagesCount + 1. 
+      // If they've sent 2 total messages (initial + 1 reply), force a diagnosis.
+      const forceFinalDiagnosis = (pastUserMessagesCount + 1) >= 2
+
       const baseInstruction = `System Instruction:
 1. ALWAYS consider the patient's full profile details (height, weight, pre-existing conditions like diabetes, BP, etc.) stored in the database.
 2. EMERGENCY: If the symptoms combined with health history point to an emergency, immediately provide critical life-saving instructions and recommend emergency actions in 'care_points'. Do NOT ask follow-ups in this case.
-3. FOLLOW-UPS: If it is NOT an emergency, FIRST ask a simple one-line follow-up question to gather necessary information before making a clear diagnosis. Do NOT include your internal analysis or generic advice when asking a follow-up. Just ask the question naturally.
-4. FINAL DIAGNOSIS: After 2-3 questions, when you have good assurance about the diagnosis, provide a detailed analysis (explicitly stating factors like "Considering your weight of X kg..."), and a final diagnosis along with healthcare suggestions.
-If you are constrained to return JSON with {probable_ailment, recommended_specialist, care_points}, put your one-line follow-up question (or your final detailed analysis) directly inside the 'care_points' string. For follow-ups, set probable_ailment and recommended_specialist exactly to "Pending".`
+${forceFinalDiagnosis 
+? `3. FINAL DIAGNOSIS REQUIRED: You have asked enough questions. You MUST now provide a detailed medical analysis (explicitly stating factors like "Considering your weight of X kg...") and a CLEAR final diagnosis along with healthcare suggestions. DO NOT ask any more follow-up questions.` 
+: `3. FOLLOW-UPS: If it is NOT an emergency, FIRST ask exactly ONE simple, one-line follow-up question to gather necessary information. Do NOT include your internal analysis or generic advice when asking a follow-up. Just ask the question naturally.`}
+4. OUTPUT FORMAT: If you are constrained to return JSON with {probable_ailment, recommended_specialist, care_points}: 
+   - For follow-ups: put your one-line follow-up question directly inside the 'care_points' string, and set probable_ailment and recommended_specialist exactly to "Pending".
+   - For FINAL DIAGNOSIS: provide the final ailment, the specialist, and put your detailed analysis and suggestions inside 'care_points'.`
 
       const enrichedSymptoms = symptoms 
         ? `${baseInstruction}\n\nUser Input: ${symptoms}\n[If an image is provided, analyze it carefully for visual symptoms.]`

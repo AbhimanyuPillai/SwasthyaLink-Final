@@ -168,18 +168,18 @@ function AssistantBubble({ message, isHydrated }: { message: Message; isHydrated
       {hasStructuredData ? (
         <div>
           {/* Medical Assessment Section */}
-          <div className="px-3 pt-3 pb-2 space-y-2">
-            {message.chatData!.probable_ailment && (
-              <div className="flex gap-2">
-                <span className="text-[10px] font-semibold text-primary uppercase tracking-wide w-28 flex-shrink-0 pt-0.5">
+          <div className="px-4 pt-3 pb-3 space-y-3">
+            {message.chatData!.probable_ailment && message.chatData!.probable_ailment.toLowerCase() !== "pending" && (
+              <div className="flex gap-2 items-start">
+                <span className="text-[10px] font-bold text-primary uppercase tracking-wide w-28 flex-shrink-0 pt-0.5">
                   Probable Ailment
                 </span>
-                <span className="text-sm text-foreground leading-snug">{message.chatData!.probable_ailment}</span>
+                <span className="text-sm text-foreground font-medium leading-snug">{message.chatData!.probable_ailment}</span>
               </div>
             )}
-            {message.chatData!.recommended_specialist && (
-              <div className="flex gap-2">
-                <span className="text-[10px] font-semibold text-primary uppercase tracking-wide w-28 flex-shrink-0 pt-0.5">
+            {message.chatData!.recommended_specialist && message.chatData!.recommended_specialist.toLowerCase() !== "pending" && (
+              <div className="flex gap-2 items-start">
+                <span className="text-[10px] font-bold text-primary uppercase tracking-wide w-28 flex-shrink-0 pt-0.5">
                   See a
                 </span>
                 <span className="text-sm font-medium text-foreground leading-snug">
@@ -188,11 +188,13 @@ function AssistantBubble({ message, isHydrated }: { message: Message; isHydrated
               </div>
             )}
             {message.chatData!.care_points && (
-              <div className="pt-0.5">
-                <p className="text-[10px] font-semibold text-primary uppercase tracking-wide mb-1">Care Points</p>
-                <p className="text-sm text-foreground/90 leading-relaxed whitespace-pre-line">
+              <div className="pt-1">
+                {(message.chatData!.probable_ailment && message.chatData!.probable_ailment.toLowerCase() !== "pending") && (
+                  <p className="text-[10px] font-bold text-primary uppercase tracking-wide mb-1.5">Analysis & Care Points</p>
+                )}
+                <div className="text-sm text-foreground/90 leading-relaxed whitespace-pre-line bg-muted/40 p-3 rounded-lg border border-border/50">
                   {message.chatData!.care_points}
-                </p>
+                </div>
               </div>
             )}
           </div>
@@ -392,11 +394,16 @@ export function AskAgent() {
         ...(m.image ? { image: m.image } : {})
       }))
       
-      const baseInstruction = "System Instruction: 1. Thoroughly consider the patient's pre-existing conditions (e.g., diabetes, hypertension) from their profile. 2. If their symptoms combined with their health history pose a severe risk, prominently advise immediate emergency action. 3. Be slightly more detailed and descriptive in your medical analysis, keeping it easy to understand but comprehensive. 4. If you need more info for a precise diagnosis, ask short follow-up questions before providing a final analysis."
+      const baseInstruction = `System Instruction:
+1. ALWAYS consider the patient's full profile details (height, weight, pre-existing conditions like diabetes, BP, etc.) stored in the database.
+2. EMERGENCY: If the symptoms combined with health history point to an emergency, immediately provide critical life-saving instructions and recommend emergency actions in 'care_points'. Do NOT ask follow-ups in this case.
+3. FOLLOW-UPS: If it is NOT an emergency, FIRST ask short, direct follow-up questions to gather necessary information before making a clear diagnosis.
+4. DETAILED ANALYSIS: In your response, explicitly state the processing you have done (e.g. "Considering your weight of X kg and history of high BP...").
+If you are constrained to return JSON with {probable_ailment, recommended_specialist, care_points}, put your conversational analysis and follow-up questions directly inside the 'care_points' string, and set probable_ailment and recommended_specialist to "Pending" until you have enough information for a final diagnosis.`
 
       const enrichedSymptoms = symptoms 
-        ? `${symptoms}\n\n[${baseInstruction} If an image is provided, analyze it carefully for visual symptoms.]`
-        : `[${baseInstruction} Analyze the provided image.]`
+        ? `${baseInstruction}\n\nUser Input: ${symptoms}\n[If an image is provided, analyze it carefully for visual symptoms.]`
+        : `${baseInstruction}\n\n[Analyze the provided image.]`
 
       const response = await fetch(`${BACKEND_URL}/chat`, {
         method: "POST",

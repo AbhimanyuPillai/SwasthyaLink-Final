@@ -7,7 +7,9 @@
         "phone": "+91 20 6645 5100",
         "area_zone": "Camp / Sassoon Road",
         "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJFS5RJ_jAwjsRB5zk2s6LU0c",
-        "operating_hours": "Open 24 Hours, All Days"
+        "operating_hours": "Open 24 Hours, All Days",
+        "lat": 18.5314,
+        "lng": 73.8771
     },
     {
         "hospital_id": "HOS-002",
@@ -17,7 +19,9 @@
         "phone": "+91 20 6681 9999",
         "area_zone": "Camp / Sassoon Road",
         "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJg5LSFljAwjsRE-EkJ0XDmP4",
-        "operating_hours": "Open 24 Hours, All Days"
+        "operating_hours": "Open 24 Hours, All Days",
+        "lat": 18.5286,
+        "lng": 73.8814
     },
     {
         "hospital_id": "HOS-003",
@@ -27,7 +31,9 @@
         "phone": "+91 20 6603 7300",
         "area_zone": "Rasta Peth",
         "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJ4ZP9omfAwjsRG5sPQlKaAR0",
-        "operating_hours": "Open 24 Hours, All Days"
+        "operating_hours": "Open 24 Hours, All Days",
+        "lat": 18.5155,
+        "lng": 73.8568
     },
     {
         "hospital_id": "HOS-004",
@@ -37,7 +43,9 @@
         "phone": "+91 20 2612 8000",
         "area_zone": "Near Pune Railway Station",
         "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJ_btzKhrBwjsRKBXOvpY7RFs",
-        "operating_hours": "OPD: Mon-Sat 9:00 AM - 12:00 PM; Emergency: 24x7"
+        "operating_hours": "OPD: Mon-Sat 9:00 AM - 12:00 PM; Emergency: 24x7",
+        "lat": 18.5236,
+        "lng": 73.8694
     },
     {
         "hospital_id": "HOS-005",
@@ -47,7 +55,9 @@
         "phone": "+91 20 2611 1528",
         "area_zone": "Pune Railway Station / Cantonment",
         "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJNzTDzV7AwjsRG1cMb1qd-eo",
-        "operating_hours": "Mon-Sat: 9:00 AM - 5:00 PM"
+        "operating_hours": "Mon-Sat: 9:00 AM - 5:00 PM",
+        "lat": 18.5294,
+        "lng": 73.8736
     },
     {
         "hospital_id": "HOS-006",
@@ -57,7 +67,9 @@
         "phone": "+91 80 4804 5849",
         "area_zone": "Sangamvadi",
         "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJZ3EvH0XBwjsRAAItUrKYGMo",
-        "operating_hours": "Open 24 Hours, All Days"
+        "operating_hours": "Open 24 Hours, All Days",
+        "lat": 18.5446,
+        "lng": 73.8839
     },
     {
         "hospital_id": "HOS-007",
@@ -67,7 +79,9 @@
         "phone": "+91 97650 35935",
         "area_zone": "Ganesh Peth",
         "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJ1dn2LkLAwjsRHRKSCSA7qP4",
-        "operating_hours": "Open 24 Hours, All Days"
+        "operating_hours": "Open 24 Hours, All Days",
+        "lat": 18.5130,
+        "lng": 73.8562
     },
     {
         "hospital_id": "HOS-008",
@@ -77,7 +91,9 @@
         "phone": "+91 87899 44965",
         "area_zone": "Kasba Peth / Mangalwar Peth",
         "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJgyCd5mbAwjsRdkRgsczZrMM",
-        "operating_hours": "Tue: Open 24 Hours; Emergency 24x7"
+        "operating_hours": "Tue: Open 24 Hours; Emergency 24x7",
+        "lat": 18.5210,
+        "lng": 73.8595
     },
     {
         "hospital_id": "HOS-009",
@@ -87,7 +103,9 @@
         "phone": "+91 84484 40991",
         "area_zone": "Sadashiv Peth / Swargate",
         "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJCVq-mA3AwjsRUzKAs5tjuo0",
-        "operating_hours": "Open 24 Hours, All Days"
+        "operating_hours": "Open 24 Hours, All Days",
+        "lat": 18.5066,
+        "lng": 73.8477
     },
     {
         "hospital_id": "HOS-010",
@@ -97,7 +115,9 @@
         "phone": "+91 97305 59600",
         "area_zone": "Sadashiv Peth / Deccan",
         "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJE_kJ-XXAwjsRvi6MSacu0VQ",
-        "operating_hours": "Open 24 Hours, All Days"
+        "operating_hours": "Open 24 Hours, All Days",
+        "lat": 18.5167,
+        "lng": 73.8447
     },
     {
         "hospital_id": "HOS-011",
@@ -107,7 +127,9 @@
         "phone": "+91 88888 08845",
         "area_zone": "Shivaji Nagar",
         "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJhV5c3YbAwjsRcN84iUXQioo",
-        "operating_hours": "Open 24 Hours, All Days"
+        "operating_hours": "Open 24 Hours, All Days",
+        "lat": 18.5303,
+        "lng": 73.8440
     },
     {
         "hospital_id": "HOS-012",
@@ -117,7 +139,9 @@
         "phone": "+91 20 4149 9999",
         "area_zone": "Shivaji Nagar",
         "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJCfz3PX_AwjsRUmbzdBqcQ1Y",
-        "operating_hours": "Open 24 Hours, All Days"
+        "operating_hours": "Open 24 Hours, All Days",
+        "lat": 18.5358,
+        "lng": 73.8444
     },
     {
         "hospital_id": "HOS-013",
@@ -127,7 +151,9 @@
         "phone": "+91 77579 64091",
         "area_zone": "Shivaji Nagar",
         "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJC6yhtYDAwjsRafS-OjmL398",
-        "operating_hours": "Open 24 Hours, All Days"
+        "operating_hours": "Open 24 Hours, All Days",
+        "lat": 18.5331,
+        "lng": 73.8406
     },
     {
         "hospital_id": "HOS-014",
@@ -137,7 +163,9 @@
         "phone": "+91 20 6721 6600",
         "area_zone": "Shivaji Nagar",
         "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJrYWgvXe_wjsRW4WtVRbKPoI",
-        "operating_hours": "Open 24 Hours, All Days"
+        "operating_hours": "Open 24 Hours, All Days",
+        "lat": 18.5380,
+        "lng": 73.8417
     },
     {
         "hospital_id": "HOS-015",
@@ -147,7 +175,9 @@
         "phone": "+91 20 4713 8766",
         "area_zone": "Deccan Gymkhana",
         "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJH1XCpYm_wjsRi58ExuGvoeU",
-        "operating_hours": "Open 24 Hours, All Days"
+        "operating_hours": "Open 24 Hours, All Days",
+        "lat": 18.5193,
+        "lng": 73.8388
     },
     {
         "hospital_id": "HOS-016",
@@ -157,7 +187,9 @@
         "phone": "+91 20 4015 1000",
         "area_zone": "Erandwane",
         "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJAQAAQPO_wjsR92yvqVBXeIk",
-        "operating_hours": "Open 24 Hours, All Days"
+        "operating_hours": "Open 24 Hours, All Days",
+        "lat": 18.5098,
+        "lng": 73.8284
     },
     {
         "hospital_id": "HOS-017",
@@ -167,7 +199,9 @@
         "phone": "+91 72193 43223",
         "area_zone": "S.B. Road / Gokhale Nagar",
         "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJeYANJrS_wjsRY0YkVecpl9o",
-        "operating_hours": "Open 24 Hours, All Days"
+        "operating_hours": "Open 24 Hours, All Days",
+        "lat": 18.5267,
+        "lng": 73.8262
     },
     {
         "hospital_id": "HOS-018",
@@ -177,7 +211,9 @@
         "phone": "+91 88888 22222",
         "area_zone": "Kothrud",
         "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJ02vPUbe_wjsRaePS-V0YndI",
-        "operating_hours": "Open 24 Hours, All Days"
+        "operating_hours": "Open 24 Hours, All Days",
+        "lat": 18.5074,
+        "lng": 73.8127
     },
     {
         "hospital_id": "HOS-019",
@@ -187,7 +223,9 @@
         "phone": "+91 20 4055 5555",
         "area_zone": "Dhankawadi / Katraj",
         "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJHXnTdMfqwjsRZXmanedwbxM",
-        "operating_hours": "Open 24 Hours, All Days"
+        "operating_hours": "Open 24 Hours, All Days",
+        "lat": 18.4656,
+        "lng": 73.8499
     },
     {
         "hospital_id": "HOS-020",
@@ -197,7 +235,9 @@
         "phone": "+91 93070 76767",
         "area_zone": "Swargate / Parvati",
         "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJvVgVGxDAwjsR77gRe0ugvPQ",
-        "operating_hours": "Open 24 Hours, All Days"
+        "operating_hours": "Open 24 Hours, All Days",
+        "lat": 18.4989,
+        "lng": 73.8484
     },
     {
         "hospital_id": "HOS-021",
@@ -207,7 +247,9 @@
         "phone": "+91 20 6681 2222",
         "area_zone": "Fatima Nagar / Wanowrie",
         "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJKf94Xc_BwjsRE7ug9R0ZFG4",
-        "operating_hours": "Open 24 Hours, All Days"
+        "operating_hours": "Open 24 Hours, All Days",
+        "lat": 18.5054,
+        "lng": 73.8905
     },
     {
         "hospital_id": "HOS-022",
@@ -217,7 +259,9 @@
         "phone": "+91 80070 06611",
         "area_zone": "Hadapsar / Magarpatta",
         "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJTdaDB_HBwjsREqFL_bhVSU8",
-        "operating_hours": "Open 24 Hours, All Days"
+        "operating_hours": "Open 24 Hours, All Days",
+        "lat": 18.5093,
+        "lng": 73.9281
     },
     {
         "hospital_id": "HOS-023",
@@ -227,7 +271,9 @@
         "phone": "+91 20 4713 8766",
         "area_zone": "Hadapsar",
         "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJ13jtbPfBwjsRq-ooUa9y-u8",
-        "operating_hours": "Open 24 Hours, All Days"
+        "operating_hours": "Open 24 Hours, All Days",
+        "lat": 18.5046,
+        "lng": 73.9410
     },
     {
         "hospital_id": "HOS-024",
@@ -237,7 +283,9 @@
         "phone": "+91 20 6050 0251",
         "area_zone": "Kondhwa",
         "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJ426n3YnqwjsRVztpD-k033U",
-        "operating_hours": "Open 24 Hours, All Days"
+        "operating_hours": "Open 24 Hours, All Days",
+        "lat": 18.4716,
+        "lng": 73.8860
     },
     {
         "hospital_id": "HOS-025",
@@ -247,7 +295,9 @@
         "phone": "+91 20 6649 4949",
         "area_zone": "Wanowrie",
         "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJ42j99HbqwjsR-JSYNKnCyco",
-        "operating_hours": "Open 24 Hours, All Days"
+        "operating_hours": "Open 24 Hours, All Days",
+        "lat": 18.5022,
+        "lng": 73.9003
     },
     {
         "hospital_id": "HOS-026",
@@ -257,7 +307,9 @@
         "phone": "OXO",
         "area_zone": "Yerawada",
         "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJV-n3ZePAwjsROJwWctfGQnA",
-        "operating_hours": "OPD: Mon-Sat 9:00 AM - 5:00 PM; NICU 24x7"
+        "operating_hours": "OPD: Mon-Sat 9:00 AM - 5:00 PM; NICU 24x7",
+        "lat": 18.5519,
+        "lng": 73.8952
     },
     {
         "hospital_id": "HOS-027",
@@ -267,7 +319,9 @@
         "phone": "+91 20 4713 8766",
         "area_zone": "Nagar Road / Yerawada",
         "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJdwmjhrXBwjsR5NVuBvruOwg",
-        "operating_hours": "Open 24 Hours, All Days"
+        "operating_hours": "Open 24 Hours, All Days",
+        "lat": 18.5494,
+        "lng": 73.9069
     },
     {
         "hospital_id": "HOS-028",
@@ -277,7 +331,9 @@
         "phone": "+91 99728 99728",
         "area_zone": "Kalyani Nagar",
         "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJ2bfVqRrBwjsRu7es_KWEDBI",
-        "operating_hours": "Open 24 Hours, All Days"
+        "operating_hours": "Open 24 Hours, All Days",
+        "lat": 18.5459,
+        "lng": 73.9010
     },
     {
         "hospital_id": "HOS-029",
@@ -287,7 +343,9 @@
         "phone": "+91 84088 61501",
         "area_zone": "Kalyani Nagar",
         "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJ6R5tQw7BwjsRenKnsnXJOwM",
-        "operating_hours": "Mon-Sat: 7:00 AM - 10:00 PM; Sun: 8:00 AM - 5:00 PM"
+        "operating_hours": "Mon-Sat: 7:00 AM - 10:00 PM; Sun: 8:00 AM - 5:00 PM",
+        "lat": 18.5485,
+        "lng": 73.9051
     },
     {
         "hospital_id": "HOS-030",
@@ -297,7 +355,9 @@
         "phone": "+91 92402 22222",
         "area_zone": "Kalyani Nagar",
         "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJw3zLJAbBwjsRTNmcz2Pl5eQ",
-        "operating_hours": "Mon-Sat: 7:00 AM - 9:00 PM; Sun: 8:00 AM - 5:00 PM"
+        "operating_hours": "Mon-Sat: 7:00 AM - 9:00 PM; Sun: 8:00 AM - 5:00 PM",
+        "lat": 18.5463,
+        "lng": 73.9024
     },
     {
         "hospital_id": "HOS-031",
@@ -307,7 +367,9 @@
         "phone": "+91 93257 84563",
         "area_zone": "Nagar Road / Kalyani Nagar",
         "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJ__8_cRnBwjsRJjg_oEZjnCc",
-        "operating_hours": "Open 24 Hours, All Days"
+        "operating_hours": "Open 24 Hours, All Days",
+        "lat": 18.5481,
+        "lng": 73.9078
     },
     {
         "hospital_id": "HOS-032",
@@ -317,7 +379,9 @@
         "phone": "+91 20 6609 9888",
         "area_zone": "Koregaon Park",
         "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJ2bE-tv_AwjsRPU7eILq9S4M",
-        "operating_hours": "Mon-Sat: 8:00 AM - 7:00 PM; Sun: 8:30 AM - 3:00 PM"
+        "operating_hours": "Mon-Sat: 8:00 AM - 7:00 PM; Sun: 8:30 AM - 3:00 PM",
+        "lat": 18.5362,
+        "lng": 73.8948
     },
     {
         "hospital_id": "HOS-033",
@@ -327,7 +391,9 @@
         "phone": "+91 20 6609 9999",
         "area_zone": "Koregaon Park",
         "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJN-jEyv_AwjsR99DoapBdIe4",
-        "operating_hours": "Open 24 Hours, All Days"
+        "operating_hours": "Open 24 Hours, All Days",
+        "lat": 18.5348,
+        "lng": 73.8962
     },
     {
         "hospital_id": "HOS-034",
@@ -337,7 +403,9 @@
         "phone": "OXO",
         "area_zone": "Koregaon Park",
         "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJyV1Wx__AwjsRilOdbSAqYK0",
-        "operating_hours": "Open 24 Hours, All Days"
+        "operating_hours": "Open 24 Hours, All Days",
+        "lat": 18.5341,
+        "lng": 73.8979
     },
     {
         "hospital_id": "HOS-035",
@@ -347,7 +415,9 @@
         "phone": "+91 81080 08844",
         "area_zone": "Koregaon Park",
         "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJWdmFUQbBwjsRv2ffKjUFrJ0",
-        "operating_hours": "Mon-Sat: 7:00 AM - 9:00 PM; Sun: 10:00 AM - 6:00 PM"
+        "operating_hours": "Mon-Sat: 7:00 AM - 9:00 PM; Sun: 10:00 AM - 6:00 PM",
+        "lat": 18.5390,
+        "lng": 73.8991
     },
     {
         "hospital_id": "HOS-036",
@@ -357,7 +427,9 @@
         "phone": "+91 1800 103 1010",
         "area_zone": "Viman Nagar",
         "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJ9a6DR0fBwjsRfu-a25FMWME",
-        "operating_hours": "Mon-Sat: 7:00 AM - 9:30 PM; Sun: 8:00 AM - 5:00 PM"
+        "operating_hours": "Mon-Sat: 7:00 AM - 9:30 PM; Sun: 8:00 AM - 5:00 PM",
+        "lat": 18.5674,
+        "lng": 73.9145
     },
     {
         "hospital_id": "HOS-037",
@@ -367,7 +439,9 @@
         "phone": "+91 87660 40790",
         "area_zone": "Viman Nagar",
         "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJKVMfbLDBwjsR-zAmOlN9xJA",
-        "operating_hours": "Mon-Sat: 9:00 AM - 10:00 PM; Sun: Closed"
+        "operating_hours": "Mon-Sat: 9:00 AM - 10:00 PM; Sun: Closed",
+        "lat": 18.5691,
+        "lng": 73.9178
     },
     {
         "hospital_id": "HOS-038",
@@ -377,7 +451,9 @@
         "phone": "+91 20 2663 0708",
         "area_zone": "Viman Nagar",
         "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJTxVsFEfBwjsRKMAZfqThKcg",
-        "operating_hours": "Mon-Sun: 8:00 AM - 9:30 PM"
+        "operating_hours": "Mon-Sun: 8:00 AM - 9:30 PM",
+        "lat": 18.5663,
+        "lng": 73.9133
     },
     {
         "hospital_id": "HOS-039",
@@ -387,7 +463,9 @@
         "phone": "+91 77986 46925",
         "area_zone": "Viman Nagar / Kharadi",
         "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJvaOzuEfBwjsR4r7LHVcwtu0",
-        "operating_hours": "Mon-Sun: 10:00 AM - 2:30 PM, 5:00 PM - 9:00 PM"
+        "operating_hours": "Mon-Sun: 10:00 AM - 2:30 PM, 5:00 PM - 9:00 PM",
+        "lat": 18.5629,
+        "lng": 73.9213
     },
     {
         "hospital_id": "HOS-040",
@@ -397,7 +475,9 @@
         "phone": "+91 77098 62164",
         "area_zone": "Viman Nagar / Kharadi",
         "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJcdh8fADBwjsRmf3hCCl2h1c",
-        "operating_hours": "Open 24 Hours, All Days"
+        "operating_hours": "Open 24 Hours, All Days",
+        "lat": 18.5606,
+        "lng": 73.9239
     },
     {
         "hospital_id": "HOS-041",
@@ -407,7 +487,9 @@
         "phone": "+91 20 6165 6666",
         "area_zone": "Kharadi",
         "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJfwlxH37BwjsROeG41SeLErg",
-        "operating_hours": "Open 24 Hours, All Days"
+        "operating_hours": "Open 24 Hours, All Days",
+        "lat": 18.5560,
+        "lng": 73.9429
     },
     {
         "hospital_id": "HOS-042",
@@ -417,7 +499,9 @@
         "phone": "+91 1860 500 7788",
         "area_zone": "Kharadi",
         "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJ219Xj9jDwjsRMws8ZKBZ4Xg",
-        "operating_hours": "Mon-Sat: 7:30 AM - 8:00 PM; Sun: 8:00 AM - 4:30 PM"
+        "operating_hours": "Mon-Sat: 7:30 AM - 8:00 PM; Sun: 8:00 AM - 4:30 PM",
+        "lat": 18.5522,
+        "lng": 73.9412
     },
     {
         "hospital_id": "HOS-043",
@@ -427,7 +511,9 @@
         "phone": "+91 91195 87272",
         "area_zone": "Kharadi",
         "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJTRpALtnDwjsROT2rFt3NwSQ",
-        "operating_hours": "Open 24 Hours, All Days"
+        "operating_hours": "Open 24 Hours, All Days",
+        "lat": 18.5579,
+        "lng": 73.9388
     },
     {
         "hospital_id": "HOS-044",
@@ -437,7 +523,9 @@
         "phone": "+91 98228 34442",
         "area_zone": "Chandan Nagar / Kharadi",
         "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJXVszRVzBwjsRXpnBvtHCU0I",
-        "operating_hours": "Open 24 Hours, All Days"
+        "operating_hours": "Open 24 Hours, All Days",
+        "lat": 18.5547,
+        "lng": 73.9358
     },
     {
         "hospital_id": "HOS-045",
@@ -447,7 +535,9 @@
         "phone": "+91 20 6637 5555",
         "area_zone": "Baner",
         "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJq6qqWtK-wjsRB3ipyUrXw0s",
-        "operating_hours": "Open 24 Hours, All Days"
+        "operating_hours": "Open 24 Hours, All Days",
+        "lat": 18.5590,
+        "lng": 73.7846
     },
     {
         "hospital_id": "HOS-046",
@@ -457,7 +547,9 @@
         "phone": "+91 20 6813 8888",
         "area_zone": "Baner",
         "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJn3azDB-_wjsRFm-Kxwuim2Q",
-        "operating_hours": "Open 24 Hours, All Days"
+        "operating_hours": "Open 24 Hours, All Days",
+        "lat": 18.5614,
+        "lng": 73.7870
     },
     {
         "hospital_id": "HOS-047",
@@ -467,7 +559,9 @@
         "phone": "+91 80070 09638",
         "area_zone": "Baner",
         "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJNfO_5fS_wjsRxc3IgTDFLpo",
-        "operating_hours": "Open 24 Hours, All Days"
+        "operating_hours": "Open 24 Hours, All Days",
+        "lat": 18.5573,
+        "lng": 73.7903
     },
     {
         "hospital_id": "HOS-048",
@@ -477,7 +571,9 @@
         "phone": "+91 99229 68795",
         "area_zone": "Baner",
         "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJc5uuAuK_wjsR59VQRpypDUI",
-        "operating_hours": "Mon-Sun: 11:00 AM - 1:00 PM, 6:00 PM - 9:00 PM"
+        "operating_hours": "Mon-Sun: 11:00 AM - 1:00 PM, 6:00 PM - 9:00 PM",
+        "lat": 18.5601,
+        "lng": 73.7921
     },
     {
         "hospital_id": "HOS-049",
@@ -487,7 +583,9 @@
         "phone": "+91 84829 09583",
         "area_zone": "Baner",
         "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJbalMOzW_wjsRYvFIyzJkcIk",
-        "operating_hours": "Mon-Sun: 9:00 AM - 10:00 PM"
+        "operating_hours": "Mon-Sun: 9:00 AM - 10:00 PM",
+        "lat": 18.5558,
+        "lng": 73.7885
     },
     {
         "hospital_id": "HOS-050",
@@ -497,7 +595,9 @@
         "phone": "+91 89285 00300",
         "area_zone": "Baner / Balewadi",
         "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJyUoI_s2-wjsRdW8BbcS4_i8",
-        "operating_hours": "Mon-Sat: 7:30 AM - 9:30 PM; Sun: 8:00 AM - 1:00 PM"
+        "operating_hours": "Mon-Sat: 7:30 AM - 9:30 PM; Sun: 8:00 AM - 1:00 PM",
+        "lat": 18.5633,
+        "lng": 73.7808
     },
     {
         "hospital_id": "HOS-051",
@@ -507,7 +607,9 @@
         "phone": "+91 20 3503 2200",
         "area_zone": "Baner / Balewadi",
         "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJ6RkI7DK5wjsR5_U7MDh5N_I",
-        "operating_hours": "Open 24 Hours, All Days"
+        "operating_hours": "Open 24 Hours, All Days",
+        "lat": 18.5659,
+        "lng": 73.7779
     },
     {
         "hospital_id": "HOS-052",
@@ -517,7 +619,9 @@
         "phone": "+91 20 6744 8600",
         "area_zone": "Aundh",
         "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJi0PY8y-_wjsRck_nYefLQF8",
-        "operating_hours": "Open 24 Hours, All Days"
+        "operating_hours": "Open 24 Hours, All Days",
+        "lat": 18.5621,
+        "lng": 73.8086
     },
     {
         "hospital_id": "HOS-053",
@@ -527,7 +631,9 @@
         "phone": "+91 20 6729 6464",
         "area_zone": "Aundh",
         "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJp5bAYi-_wjsRetgDZsF7TgY",
-        "operating_hours": "Open 24 Hours, All Days"
+        "operating_hours": "Open 24 Hours, All Days",
+        "lat": 18.5576,
+        "lng": 73.8098
     },
     {
         "hospital_id": "HOS-054",
@@ -537,7 +643,9 @@
         "phone": "+91 20 6764 3200",
         "area_zone": "Aundh",
         "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJia4wmC6_wjsRotLFPWlST1M",
-        "operating_hours": "Open 24 Hours, All Days"
+        "operating_hours": "Open 24 Hours, All Days",
+        "lat": 18.5598,
+        "lng": 73.8074
     },
     {
         "hospital_id": "HOS-055",
@@ -547,7 +655,9 @@
         "phone": "+91 75586 50249",
         "area_zone": "Viman Nagar / Clover Park",
         "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJb-CZoEfBwjsRFwETJdvOTGw",
-        "operating_hours": "Mon-Sat: 9:00 AM - 9:00 PM; Sun: 10:00 AM - 6:00 PM"
+        "operating_hours": "Mon-Sat: 9:00 AM - 9:00 PM; Sun: 10:00 AM - 6:00 PM",
+        "lat": 18.5650,
+        "lng": 73.9102
     },
     {
         "hospital_id": "HOS-056",
@@ -557,7 +667,9 @@
         "phone": "+91 20 6193 0000",
         "area_zone": "Lavale / Mulshi (Near Hinjawadi)",
         "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJlc6cD129wjsRYmAb6IMmaN0",
-        "operating_hours": "Open 24 Hours, All Days"
+        "operating_hours": "Open 24 Hours, All Days",
+        "lat": 18.5220,
+        "lng": 73.7363
     },
     {
         "hospital_id": "HOS-057",
@@ -567,7 +679,9 @@
         "phone": "+91 20 6699 9999",
         "area_zone": "Hinjawadi",
         "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJU3NVE8O7wjsRM3sUU-8D4tY",
-        "operating_hours": "Open 24 Hours, All Days"
+        "operating_hours": "Open 24 Hours, All Days",
+        "lat": 18.5934,
+        "lng": 73.7388
     },
     {
         "hospital_id": "HOS-058",
@@ -577,7 +691,9 @@
         "phone": "+91 98811 23006",
         "area_zone": "Chinchwad / Thergaon",
         "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJU6Ju9J25wjsRwR_ajs0TMOg",
-        "operating_hours": "Open 24 Hours, All Days"
+        "operating_hours": "Open 24 Hours, All Days",
+        "lat": 18.6273,
+        "lng": 73.7806
     },
     {
         "hospital_id": "HOS-059",
@@ -587,7 +703,9 @@
         "phone": "+91 98819 85453",
         "area_zone": "Chinchwad",
         "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJG341wbW5wjsRC8JwIP4DZvY",
-        "operating_hours": "Open 24 Hours, All Days"
+        "operating_hours": "Open 24 Hours, All Days",
+        "lat": 18.6248,
+        "lng": 73.7993
     },
     {
         "hospital_id": "HOS-060",
@@ -597,7 +715,9 @@
         "phone": "+91 20 2720 1717",
         "area_zone": "Pimple Saudagar / PCMC",
         "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJXVVVRW65wjsRnT8cPhCKkGA",
-        "operating_hours": "Mon-Sat: 8:00 AM - 8:00 PM"
+        "operating_hours": "Mon-Sat: 8:00 AM - 8:00 PM",
+        "lat": 18.6072,
+        "lng": 73.7777
     },
     {
         "hospital_id": "HOS-061",
@@ -607,6 +727,8 @@
         "phone": "+91 98811 42101",
         "area_zone": "Nigdi / Pimpri-Chinchwad",
         "google_maps_link": "https://www.google.com/maps/place/?q=place_id:ChIJo9Vu_VC5wjsR7vvLrP6V6T8",
-        "operating_hours": "Open 24 Hours, All Days"
+        "operating_hours": "Open 24 Hours, All Days",
+        "lat": 18.6489,
+        "lng": 73.7690
     }
 ]

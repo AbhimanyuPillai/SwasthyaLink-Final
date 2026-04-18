@@ -78,7 +78,7 @@ export function GovernmentAuthWrapper({ children }: { children: React.ReactNode 
             <Input
               id="password"
               type="password"
-              placeholder="••••••••"
+              placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="bg-background/80 border-input h-11 transition-all focus:ring-2 focus:ring-emerald/20"

@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import Image from "next/image"
-import { Activity, Map, Database, Brain, Menu, X } from "lucide-react"
+import { Activity, Map, Database, Brain, Menu, X, LogOut } from "lucide-react"
 import { useState } from "react"
 import { cn } from "@/app/government/lib/utils"
 
@@ -83,11 +83,21 @@ export function Sidebar() {
         </nav>
 
         {/* Footer */}
-        <div className="p-4 border-t border-sidebar-border">
-          <div className="flex items-center gap-2 px-4 py-2">
+        <div className="p-4 border-t border-sidebar-border mt-auto">
+          <div className="flex items-center gap-2 px-4 py-2 mb-2">
             <div className="h-2 w-2 rounded-full bg-emerald animate-pulse" />
             <span className="text-xs text-sidebar-foreground/60">System Online</span>
           </div>
+          <button
+            onClick={() => {
+              sessionStorage.removeItem("gov_auth")
+              window.location.reload()
+            }}
+            className="w-full flex items-center justify-center gap-2 px-4 py-2 mt-2 rounded-[0.5rem] bg-sidebar-accent/50 text-sidebar-foreground/80 hover:text-sidebar-foreground hover:bg-sidebar-accent transition-colors"
+          >
+            <LogOut className="w-4 h-4" />
+            <span className="text-sm font-medium">Secure Logout</span>
+          </button>
         </div>
       </aside>
     </>

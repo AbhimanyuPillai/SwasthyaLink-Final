@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState, useRef, useEffect } from "react"
-import { Send, Bot, User, Sparkles, ImagePlus, AlertTriangle, X, MapPin, Phone, Clock, Navigation } from "lucide-react"
+import { Send, Bot, User, Sparkles, ImagePlus, AlertTriangle, X, MapPin, Phone, Clock, Navigation, Trash2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
 import { BACKEND_URL } from "@/lib/backend"
@@ -250,16 +250,58 @@ export function AskAgent() {
 
   // Initialize messages only on client side to avoid hydration mismatch
   useEffect(() => {
-    setMessages([
+    const saved = sessionStorage.getItem("swasthya-mitra-chat")
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved)
+        // Revive date objects
+        const revived = parsed.map((m: any) => ({
+          ...m,
+          timestamp: new Date(m.timestamp)
+        }))
+        setMessages(revived)
+      } catch (e) {
+        setMessages([
+          {
+            id: "1",
+            role: "assistant",
+            content: "Namaste! I am Swasthya Mitra, your digital health assistant. You can describe your symptoms or ask any health-related questions. I will also suggest the most relevant nearby hospitals for you. How may I assist you today?",
+            timestamp: new Date(),
+          },
+        ])
+      }
+    } else {
+      setMessages([
+        {
+          id: "1",
+          role: "assistant",
+          content: "Namaste! I am Swasthya Mitra, your digital health assistant. You can describe your symptoms or ask any health-related questions. I will also suggest the most relevant nearby hospitals for you. How may I assist you today?",
+          timestamp: new Date(),
+        },
+      ])
+    }
+    setIsHydrated(true)
+  }, [])
+
+  // Save to session storage whenever messages change
+  useEffect(() => {
+    if (isHydrated && messages.length > 0) {
+      sessionStorage.setItem("swasthya-mitra-chat", JSON.stringify(messages))
+    }
+  }, [messages, isHydrated])
+
+  const clearChat = () => {
+    const initial: Message[] = [
       {
         id: "1",
         role: "assistant",
         content: "Namaste! I am Swasthya Mitra, your digital health assistant. You can describe your symptoms or ask any health-related questions. I will also suggest the most relevant nearby hospitals for you. How may I assist you today?",
         timestamp: new Date(),
       },
-    ])
-    setIsHydrated(true)
-  }, [])
+    ]
+    setMessages(initial)
+    sessionStorage.setItem("swasthya-mitra-chat", JSON.stringify(initial))
+  }
 
   // Show disclaimer on first visit to chat tab
   useEffect(() => {
@@ -343,11 +385,26 @@ export function AskAgent() {
       const coords = userCoordsFromSession()
 
       // 1. Call the main AI chat backend
+      // Provide previous context (excluding large hospital arrays) to AI
+      const history = messages.map(m => ({ 
+        role: m.role, 
+        content: m.content,
+        ...(m.image ? { image: m.image } : {})
+      }))
+      
+      const baseInstruction = "System Instruction: 1. Thoroughly consider the patient's pre-existing conditions (e.g., diabetes, hypertension) from their profile. 2. If their symptoms combined with their health history pose a severe risk, prominently advise immediate emergency action. 3. Be slightly more detailed and descriptive in your medical analysis, keeping it easy to understand but comprehensive. 4. If you need more info for a precise diagnosis, ask short follow-up questions before providing a final analysis."
+
+      const enrichedSymptoms = symptoms 
+        ? `${symptoms}\n\n[${baseInstruction} If an image is provided, analyze it carefully for visual symptoms.]`
+        : `[${baseInstruction} Analyze the provided image.]`
+
       const response = await fetch(`${BACKEND_URL}/chat`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          symptoms,
+          symptoms: enrichedSymptoms,
+          history,
+          image: selectedImage || undefined,
           ...(patient ? { patient } : {}),
         }),
       })
@@ -455,6 +512,15 @@ export function AskAgent() {
         <div className="flex-1">
           <p className="text-[10px] text-muted-foreground">AI Health Assistant • Hospital Finder • Online</p>
         </div>
+        <Button
+          variant="ghost"
+          size="icon"
+          onClick={clearChat}
+          className="h-7 w-7 text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-colors"
+          title="Clear Chat"
+        >
+          <Trash2 className="h-4 w-4" />
+        </Button>
       </div>
 
       {/* Messages - Full Width */}

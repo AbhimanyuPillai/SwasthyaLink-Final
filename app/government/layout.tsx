@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
 import { Analytics } from '@vercel/analytics/next'
+import { GovernmentToaster } from '@/app/government/components/government-toaster'
+import { GovernmentAuthWrapper } from '@/app/government/components/auth-wrapper'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -15,7 +17,10 @@ export default function GovernmentLayout({
 }>) {
   return (
     <div className="min-h-screen bg-background">
-      {children}
+      <GovernmentAuthWrapper>
+        {children}
+        <GovernmentToaster />
+      </GovernmentAuthWrapper>
       {process.env.NODE_ENV === 'production' && <Analytics />}
     </div>
   )

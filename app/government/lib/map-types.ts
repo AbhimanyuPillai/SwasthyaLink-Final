@@ -7,6 +7,8 @@ export type MapPoint = {
   diseaseId: string
   diseaseLabel: string
   severity: MapSeverity
+  /** Area / locality label from Firestore (e.g. parsed from `location` or `region`). */
+  regionName?: string
 }
 
 export function normalizeSeverity(raw: string): MapSeverity {

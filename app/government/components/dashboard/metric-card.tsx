@@ -17,7 +17,7 @@ export function MetricCard({
   accentColor = "saffron",
 }: MetricCardProps) {
   return (
-    <div className="bg-card rounded-[0.5rem] p-5 border border-border shadow-sm">
+    <div className="bg-card rounded-[0.5rem] p-4 border border-border shadow-sm">
       <div className="flex items-start justify-between">
         <div className="space-y-2">
           <p className="text-sm text-muted-foreground font-medium">{title}</p>
@@ -35,7 +35,7 @@ export function MetricCard({
         </div>
       </div>
       {trend !== "neutral" && (
-        <div className="mt-3 pt-3 border-t border-border">
+        <div className="mt-2 pt-2 border-t border-border">
           <span
             className={cn(
               "text-xs font-medium",

@@ -8,13 +8,13 @@ const severityRank: Record<MapSeverity, number> = {
   stable: 3,
 }
 
-export function summarizeRegion(region: PuneRegion, points: MapPoint[]) {
-  const inRegion = points.filter((p) => isPointInRegion(p.lat, p.lng, region))
+function summarizePointsSubset(inRegion: MapPoint[]) {
   const cases = inRegion.length
   if (!cases) {
     return {
       cases: 0,
       primaryDisease: "No matching cases",
+      primaryDiseaseId: "",
       dominantSeverity: "stable" as MapSeverity,
     }
   }
@@ -27,11 +27,13 @@ export function summarizeRegion(region: PuneRegion, points: MapPoint[]) {
   }
 
   let primaryDisease = "Unknown"
+  let primaryDiseaseId = "unknown"
   let max = 0
-  for (const { label, count } of byDisease.values()) {
+  for (const [diseaseId, { label, count }] of byDisease.entries()) {
     if (count > max) {
       max = count
       primaryDisease = label
+      primaryDiseaseId = diseaseId
     }
   }
 
@@ -45,7 +47,22 @@ export function summarizeRegion(region: PuneRegion, points: MapPoint[]) {
     }
   }
 
-  return { cases, primaryDisease, dominantSeverity }
+  return { cases, primaryDisease, primaryDiseaseId, dominantSeverity }
+}
+
+/** Summary for an arbitrary subset of points (e.g. one dynamic region). */
+export function summarizeMapPoints(points: MapPoint[]) {
+  return summarizePointsSubset(points)
+}
+
+export function summarizeRegion(region: PuneRegion, points: MapPoint[]) {
+  const inRegion = points.filter((p) => isPointInRegion(p.lat, p.lng, region))
+  return summarizePointsSubset(inRegion)
+}
+
+export function summarizeByRegionName(regionName: string, points: MapPoint[]) {
+  const inRegion = points.filter((p) => (p.regionName ?? "Unknown") === regionName)
+  return summarizePointsSubset(inRegion)
 }
 
 export function countPointsInRegion(region: PuneRegion, points: MapPoint[]): number {

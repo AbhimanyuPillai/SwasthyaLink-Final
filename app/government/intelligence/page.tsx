@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { toast } from "sonner"
 import { Sidebar } from "@/app/government/components/dashboard/sidebar"
 import { ContentCard } from "@/app/government/components/dashboard/content-card"
 import { MetricCard } from "@/app/government/components/dashboard/metric-card"
@@ -115,7 +116,7 @@ export default function AIIntelligencePage() {
   const totalTasks = taskList.length
 
   return (
-    <div className="min-h-screen bg-background flex">
+    <div className="h-screen bg-background flex overflow-hidden">
       <Sidebar />
 
       <div className="flex-1 flex flex-col overflow-hidden">
@@ -227,12 +228,21 @@ export default function AIIntelligencePage() {
                           </div>
                         </div>
 
-                        <div className="flex items-center gap-2 pt-2 border-t border-border">
-                          <Button size="sm" className="bg-emerald hover:bg-emerald/90 text-white">
+                        <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-border">
+                          <Button
+                            size="sm"
+                            type="button"
+                            className="bg-emerald hover:bg-emerald/90 text-white"
+                            onClick={() => toast.success("Recommendations logged")}
+                          >
                             Accept Recommendations
                           </Button>
-                          <Button size="sm" variant="outline">View Full Analysis</Button>
-                          <Button size="sm" variant="outline">Dismiss</Button>
+                          <Button size="sm" variant="outline" type="button" onClick={() => toast.message("Opening analyst brief…", { description: "Analyst brief window initiated." })}>
+                            View Full Analysis
+                          </Button>
+                          <Button size="sm" variant="outline" type="button" onClick={() => toast("Card dismissed for this session")}>
+                            Dismiss
+                          </Button>
                         </div>
                       </div>
                     </ContentCard>
@@ -248,7 +258,7 @@ export default function AIIntelligencePage() {
                         </span>
                         <Progress value={(completedTasks / totalTasks) * 100} className="w-32 h-2" />
                       </div>
-                      <Button size="sm" variant="outline">
+                      <Button size="sm" variant="outline" type="button" onClick={() => toast.success("Reminder ping simulated for assignees")}>
                         <Bell className="h-4 w-4 mr-2" />
                         Send Reminders
                       </Button>
@@ -295,7 +305,7 @@ export default function AIIntelligencePage() {
                     </div>
 
                     <div className="mt-4 pt-4 border-t border-border">
-                      <Button size="sm" className="w-full">
+                      <Button size="sm" className="w-full" type="button" onClick={() => toast.message("New task draft", { description: "Draft saved to workspace." })}>
                         <Target className="h-4 w-4 mr-2" />
                         Add New Intervention Task
                       </Button>
@@ -316,7 +326,16 @@ export default function AIIntelligencePage() {
                           onChange={(e) => setQueryText(e.target.value)}
                           className="min-h-[120px] pr-12"
                         />
-                        <Button size="sm" className="absolute bottom-3 right-3 bg-saffron hover:bg-saffron/90 text-foreground">
+                        <Button
+                          size="sm"
+                          type="button"
+                          className="absolute bottom-3 right-3 bg-saffron hover:bg-saffron/90 text-foreground"
+                          onClick={() =>
+                            toast.success("Query received", {
+                              description: queryText.trim() ? "Retrieving insights..." : "Type a question first.",
+                            })
+                          }
+                        >
                           <Send className="h-4 w-4" />
                         </Button>
                       </div>
@@ -404,7 +423,7 @@ export default function AIIntelligencePage() {
                   </div>
                 </div>
                 <div className="mt-4 pt-4 border-t border-border">
-                  <Button size="sm" variant="outline" className="w-full">
+                  <Button size="sm" variant="outline" className="w-full" type="button" onClick={() => toast.message("Model reports", { description: "Report generation queued." })}>
                     <FileText className="h-4 w-4 mr-2" />
                     View Model Reports
                   </Button>

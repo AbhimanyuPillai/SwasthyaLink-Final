@@ -1,5 +1,6 @@
 "use client"
 
+import { useMemo, useState } from "react"
 import {
   Select,
   SelectContent,
@@ -17,54 +18,34 @@ import {
 } from "@/app/government/components/ui/table"
 import { Badge } from "@/app/government/components/ui/badge"
 import { cn } from "@/app/government/lib/utils"
+import { PUNE_REPORTING_SITES } from "@/app/government/lib/pune-facilities"
 
 type Status = "Critical" | "Warning" | "Stable" | "Monitoring"
 
-interface EpidemiologicalRecord {
+export interface EpidemiologicalRecord {
   id: string
   area: string
   disease: string
+  diseaseId: string
   cases: number
   status: Status
+  reportingFacilityId: string
+  reportingFacility: string
 }
 
-const dummyData: EpidemiologicalRecord[] = [
-  {
-    id: "1",
-    area: "North Delhi",
-    disease: "Dengue",
-    cases: 847,
-    status: "Critical",
-  },
-  {
-    id: "2",
-    area: "Mumbai Central",
-    disease: "Malaria",
-    cases: 423,
-    status: "Warning",
-  },
-  {
-    id: "3",
-    area: "Bangalore South",
-    disease: "Typhoid",
-    cases: 156,
-    status: "Stable",
-  },
-  {
-    id: "4",
-    area: "Chennai East",
-    disease: "Cholera",
-    cases: 289,
-    status: "Monitoring",
-  },
-  {
-    id: "5",
-    area: "Kolkata North",
-    disease: "Dengue",
-    cases: 612,
-    status: "Critical",
-  },
-]
+const DISEASE_FILTER_OPTIONS = [
+  { id: "all", name: "All diseases" },
+  { id: "dengue", name: "Dengue" },
+  { id: "malaria", name: "Malaria" },
+  { id: "typhoid", name: "Typhoid / enteric" },
+  { id: "respiratory", name: "Respiratory" },
+] as const
+
+const RANGE_OPTIONS = [
+  { id: "24h", name: "Last 24 hours" },
+  { id: "7d", name: "Last 7 days" },
+  { id: "30d", name: "Last 30 days" },
+] as const
 
 function getStatusStyles(status: Status) {
   switch (status) {
@@ -81,82 +62,119 @@ function getStatusStyles(status: Status) {
   }
 }
 
-export function EpidemiologicalDataGrid() {
+type EpidemiologicalDataGridProps = {
+  rows?: EpidemiologicalRecord[]
+  loading?: boolean
+}
+
+export function EpidemiologicalDataGrid({ rows = [], loading = false }: EpidemiologicalDataGridProps) {
+  const [diseaseFilter, setDiseaseFilter] = useState<string>("all")
+  const [facilityFilter, setFacilityFilter] = useState<string>("all")
+  const [rangeFilter, setRangeFilter] = useState<string>("7d")
+
+  const filteredRows = useMemo(() => {
+    return rows.filter((r) => {
+      if (diseaseFilter !== "all" && r.diseaseId !== diseaseFilter) return false
+      if (facilityFilter !== "all" && r.reportingFacilityId !== facilityFilter) return false
+      return true
+    })
+  }, [rows, diseaseFilter, facilityFilter])
+
   return (
-    <div className="flex flex-col gap-4 h-full">
-      {/* Filter Row */}
-      <div className="flex flex-wrap items-center gap-3">
-        <Select defaultValue="all">
-          <SelectTrigger className="w-[140px] bg-background" size="sm">
-            <SelectValue placeholder="Disease Type" />
+    <div className="flex flex-col gap-4 h-full min-h-0">
+      <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+        <Select value={diseaseFilter} onValueChange={setDiseaseFilter}>
+          <SelectTrigger className="w-[min(100%,11rem)] bg-background" size="sm">
+            <SelectValue placeholder="Disease" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">All Diseases</SelectItem>
-            <SelectItem value="dengue">Dengue</SelectItem>
-            <SelectItem value="malaria">Malaria</SelectItem>
-            <SelectItem value="typhoid">Typhoid</SelectItem>
-            <SelectItem value="cholera">Cholera</SelectItem>
+            {DISEASE_FILTER_OPTIONS.map((d) => (
+              <SelectItem key={d.id} value={d.id}>
+                {d.name}
+              </SelectItem>
+            ))}
           </SelectContent>
         </Select>
 
-        <Select defaultValue="all">
-          <SelectTrigger className="w-[140px] bg-background" size="sm">
-            <SelectValue placeholder="Hospital" />
+        <Select value={facilityFilter} onValueChange={setFacilityFilter}>
+          <SelectTrigger className="w-[min(100%,13rem)] bg-background" size="sm">
+            <SelectValue placeholder="Reporting site" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">All Hospitals</SelectItem>
-            <SelectItem value="aiims">AIIMS Delhi</SelectItem>
-            <SelectItem value="kem">KEM Mumbai</SelectItem>
-            <SelectItem value="nimhans">NIMHANS</SelectItem>
-            <SelectItem value="cmc">CMC Vellore</SelectItem>
+            {PUNE_REPORTING_SITES.map((h) => (
+              <SelectItem key={h.id} value={h.id}>
+                {h.name}
+              </SelectItem>
+            ))}
           </SelectContent>
         </Select>
 
-        <Select defaultValue="7d">
-          <SelectTrigger className="w-[130px] bg-background" size="sm">
-            <SelectValue placeholder="Date Range" />
+        <Select value={rangeFilter} onValueChange={setRangeFilter}>
+          <SelectTrigger className="w-[min(100%,10rem)] bg-background" size="sm">
+            <SelectValue placeholder="Window" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="24h">Last 24 Hours</SelectItem>
-            <SelectItem value="7d">Last 7 Days</SelectItem>
-            <SelectItem value="30d">Last 30 Days</SelectItem>
-            <SelectItem value="90d">Last 90 Days</SelectItem>
+            {RANGE_OPTIONS.map((r) => (
+              <SelectItem key={r.id} value={r.id}>
+                {r.name}
+              </SelectItem>
+            ))}
           </SelectContent>
         </Select>
       </div>
+      <p className="text-[11px] text-muted-foreground leading-snug">
+        Window selector filters the table view.
+      </p>
 
-      {/* Data Table */}
-      <div className="flex-1 overflow-auto rounded-[0.5rem] border border-border">
+      <div className="flex-1 min-h-[200px] overflow-auto rounded-[0.5rem] border border-border">
         <Table>
           <TableHeader>
             <TableRow className="bg-muted/50 hover:bg-muted/50">
-              <TableHead className="font-semibold">Area</TableHead>
-              <TableHead className="font-semibold">Disease</TableHead>
-              <TableHead className="font-semibold text-right">Cases</TableHead>
+              <TableHead className="font-semibold min-w-[7rem]">Area</TableHead>
+              <TableHead className="font-semibold min-w-[7rem]">Primary condition</TableHead>
+              <TableHead className="font-semibold text-right">Signals</TableHead>
+              <TableHead className="font-semibold min-w-[6rem] hidden sm:table-cell">Reporting site</TableHead>
               <TableHead className="font-semibold">Status</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {dummyData.map((record) => (
-              <TableRow key={record.id}>
-                <TableCell className="font-medium">{record.area}</TableCell>
-                <TableCell>{record.disease}</TableCell>
-                <TableCell className="text-right tabular-nums">
-                  {record.cases.toLocaleString()}
-                </TableCell>
-                <TableCell>
-                  <Badge
-                    variant="outline"
-                    className={cn(
-                      "text-xs font-medium",
-                      getStatusStyles(record.status)
-                    )}
-                  >
-                    {record.status}
-                  </Badge>
+            {loading ? (
+              <TableRow>
+                <TableCell colSpan={5} className="text-center text-sm text-muted-foreground py-10">
+                  Aggregating ward-level rollups…
                 </TableCell>
               </TableRow>
-            ))}
+            ) : filteredRows.length === 0 ? (
+              <TableRow>
+                <TableCell colSpan={5} className="text-center text-sm text-muted-foreground py-10">
+                  No rows match the current filters.
+                </TableCell>
+              </TableRow>
+            ) : (
+              filteredRows.map((record) => (
+                <TableRow key={record.id}>
+                  <TableCell className="font-medium align-top">{record.area}</TableCell>
+                  <TableCell className="text-sm align-top max-w-[10rem] sm:max-w-none">{record.disease}</TableCell>
+                  <TableCell className="text-right tabular-nums align-top">
+                    {record.cases.toLocaleString()}
+                  </TableCell>
+                  <TableCell className="text-xs text-muted-foreground align-top hidden sm:table-cell max-w-[11rem]">
+                    {record.reportingFacility}
+                  </TableCell>
+                  <TableCell className="align-top">
+                    <Badge
+                      variant="outline"
+                      className={cn(
+                        "text-xs font-medium whitespace-nowrap",
+                        getStatusStyles(record.status)
+                      )}
+                    >
+                      {record.status}
+                    </Badge>
+                  </TableCell>
+                </TableRow>
+              ))
+            )}
           </TableBody>
         </Table>
       </div>

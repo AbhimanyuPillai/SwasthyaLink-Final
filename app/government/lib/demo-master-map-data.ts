@@ -1,5 +1,5 @@
 import type { MapPoint, MapSeverity } from "@/app/government/lib/map-types"
-import { PUNE_REGIONS } from "@/app/government/lib/pune-regions"
+import { PUNE_REGIONS, isPointInRegion } from "@/app/government/lib/pune-regions"
 
 /**
  * Strict Pune urban envelope (no PCMC satellite ambiguity, no extra-city scatter).
@@ -41,15 +41,16 @@ function clampToPune(lat: number, lng: number): { lat: number; lng: number } {
 }
 
 const DISEASE_POOL: { diseaseId: string; diseaseLabel: string }[] = [
-  { diseaseId: "dengue", diseaseLabel: "Dengue" },
-  { diseaseId: "malaria", diseaseLabel: "Malaria" },
-  { diseaseId: "typhoid", diseaseLabel: "Typhoid" },
-  { diseaseId: "respiratory", diseaseLabel: "Respiratory illness" },
-  { diseaseId: "dengue", diseaseLabel: "Dengue (serotype 2)" },
-  { diseaseId: "malaria", diseaseLabel: "Plasmodium vivax" },
-  { diseaseId: "respiratory", diseaseLabel: "Viral bronchitis" },
-  { diseaseId: "typhoid", diseaseLabel: "Enteric fever" },
-  { diseaseId: "respiratory", diseaseLabel: "Pneumonia (community)" },
+  { diseaseId: "dengue", diseaseLabel: "Dengue (PMC sentinel)" },
+  { diseaseId: "malaria", diseaseLabel: "Malaria (monsoon belt)" },
+  { diseaseId: "typhoid", diseaseLabel: "Typhoid / enteric fever" },
+  { diseaseId: "respiratory", diseaseLabel: "Respiratory illness (PM10 season)" },
+  { diseaseId: "dengue", diseaseLabel: "Dengue serotype-2 (Hadapsar cluster)" },
+  { diseaseId: "malaria", diseaseLabel: "Plasmodium vivax (Mula-Mutha fringe)" },
+  { diseaseId: "respiratory", diseaseLabel: "Viral bronchitis (Baner–Hinjewadi IT corridor)" },
+  { diseaseId: "typhoid", diseaseLabel: "Enteric fever (wada water-line)" },
+  { diseaseId: "respiratory", diseaseLabel: "Community pneumonia (Koregaon Park)" },
+  { diseaseId: "dengue", diseaseLabel: "Dengue (Aundh–Pashan ward watch)" },
 ]
 
 const SEVERITIES: MapSeverity[] = ["critical", "warning", "stable", "monitoring"]
@@ -89,14 +90,37 @@ const PUNE_HOSPITALS: { id: string; name: string; lat: number; lng: number; weig
   { id: "hv-desai", name: "H.V. Desai Eye Hospital", lat: 18.4942, lng: 73.9112, weight: [0.1, 0.24, 0.5, 0.16] },
 ]
 
+function regionNameForCoordinates(lat: number, lng: number): string {
+  for (const r of PUNE_REGIONS) {
+    if (isPointInRegion(lat, lng, r)) return r.name
+  }
+  return "Pune metropolitan fringe"
+}
+
 function buildDemoMasterMapData(): MapPoint[] {
   const rand = mulberry32(0x5ea5_104e)
   const out: MapPoint[] = []
   let seq = 0
 
-  const pushPoint = (lat: number, lng: number, diseaseId: string, diseaseLabel: string, severity: MapSeverity, id: string) => {
+  const pushPoint = (
+    lat: number,
+    lng: number,
+    diseaseId: string,
+    diseaseLabel: string,
+    severity: MapSeverity,
+    id: string,
+    regionName: string
+  ) => {
     const c = clampToPune(lat, lng)
-    out.push({ id, lat: c.lat, lng: c.lng, diseaseId, diseaseLabel, severity })
+    out.push({
+      id,
+      lat: c.lat,
+      lng: c.lng,
+      diseaseId,
+      diseaseLabel,
+      severity,
+      regionName,
+    })
   }
 
   // --- Region polygons: ward-level density (still Pune-only) ---
@@ -110,7 +134,7 @@ function buildDemoMasterMapData(): MapPoint[] {
       const d = DISEASE_POOL[Math.floor(rand() * DISEASE_POOL.length)]
       const severity = pickWeighted(SEVERITIES, w, rand)
       seq += 1
-      pushPoint(lat, lng, d.diseaseId, d.diseaseLabel, severity, `ward-${region.id}-${seq}`)
+      pushPoint(lat, lng, d.diseaseId, d.diseaseLabel, severity, `ward-${region.id}-${seq}`, region.name)
     }
   }
 
@@ -128,7 +152,7 @@ function buildDemoMasterMapData(): MapPoint[] {
         const d = DISEASE_POOL[Math.floor(rand() * DISEASE_POOL.length)]
         const severity = pickWeighted(SEVERITIES, hotspotWeights(region.id), rand)
         seq += 1
-        pushPoint(lat, lng, d.diseaseId, d.diseaseLabel, severity, `hub-${region.id}-${h}-${seq}`)
+        pushPoint(lat, lng, d.diseaseId, d.diseaseLabel, severity, `hub-${region.id}-${h}-${seq}`, region.name)
       }
     }
   }
@@ -142,7 +166,16 @@ function buildDemoMasterMapData(): MapPoint[] {
       const d = DISEASE_POOL[Math.floor(rand() * DISEASE_POOL.length)]
       const severity = pickWeighted(SEVERITIES, h.weight, rand)
       seq += 1
-      pushPoint(lat, lng, d.diseaseId, d.diseaseLabel, severity, `hosp-${h.id}-${seq}`)
+      const pre = clampToPune(lat, lng)
+      pushPoint(
+        lat,
+        lng,
+        d.diseaseId,
+        d.diseaseLabel,
+        severity,
+        `hosp-${h.id}-${seq}`,
+        regionNameForCoordinates(pre.lat, pre.lng)
+      )
     }
   }
 
@@ -154,7 +187,8 @@ function buildDemoMasterMapData(): MapPoint[] {
     const d = DISEASE_POOL[Math.floor(rand() * DISEASE_POOL.length)]
     const severity = pickWeighted(SEVERITIES, [0.18, 0.3, 0.38, 0.14], rand)
     seq += 1
-    pushPoint(lat, lng, d.diseaseId, d.diseaseLabel, severity, `corridor-${seq}`)
+    const cc = clampToPune(lat, lng)
+    pushPoint(lat, lng, d.diseaseId, d.diseaseLabel, severity, `corridor-${seq}`, regionNameForCoordinates(cc.lat, cc.lng))
   }
 
   return out

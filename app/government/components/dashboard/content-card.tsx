@@ -21,7 +21,7 @@ export function ContentCard({
         className
       )}
     >
-      <div className="px-5 py-4 border-b border-border flex items-center gap-3">
+      <div className="px-4 py-3 border-b border-border flex items-center gap-3">
         <div
           className={cn(
             "h-3 w-1 rounded-full",
@@ -30,7 +30,7 @@ export function ContentCard({
         />
         <h2 className="text-sm font-semibold text-card-foreground">{title}</h2>
       </div>
-      <div className="flex-1 p-5">{children}</div>
+      <div className="flex-1 p-3 flex flex-col min-h-0">{children}</div>
     </div>
   )
 }

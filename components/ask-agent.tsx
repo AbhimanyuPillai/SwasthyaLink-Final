@@ -408,7 +408,7 @@ export function AskAgent() {
 2. EMERGENCY: If the symptoms combined with health history point to an emergency, immediately provide critical life-saving instructions and recommend emergency actions in 'care_points'. Do NOT ask follow-ups in this case.
 ${forceFinalDiagnosis 
 ? `3. FINAL DIAGNOSIS REQUIRED: You have asked enough questions. You MUST now provide a detailed medical analysis (explicitly stating factors like "Considering your weight of X kg...") and a CLEAR final diagnosis along with healthcare suggestions. DO NOT ask any more follow-up questions.` 
-: `3. FOLLOW-UPS: If it is NOT an emergency, FIRST ask exactly ONE simple, one-line follow-up question to gather necessary information. Do NOT include your internal analysis or generic advice when asking a follow-up. Just ask the question naturally.`}
+: `3. FOLLOW-UPS: If it is NOT an emergency, FIRST ask exactly ONE simple, one-line follow-up question to gather necessary information. If an image was uploaded, you MUST explicitly mention what you see in the image so the user knows you analyzed it. Do NOT include your full internal analysis or generic advice when asking a follow-up. Just ask the question naturally.`}
 4. OUTPUT FORMAT: If you are constrained to return JSON with {probable_ailment, recommended_specialist, care_points}: 
    - For follow-ups: put your one-line follow-up question directly inside the 'care_points' string, and set probable_ailment and recommended_specialist exactly to "Pending".
    - For FINAL DIAGNOSIS: provide the final ailment, the specialist, and put your detailed analysis and suggestions inside 'care_points'.`
@@ -417,6 +417,10 @@ ${forceFinalDiagnosis
         ? `${baseInstruction}\n\nUser Input: ${symptoms}\n[If an image is provided, analyze it carefully for visual symptoms.]`
         : `${baseInstruction}\n\n[Analyze the provided image.]`
 
+      // Maintain visual context: if the backend drops images from history, re-send the latest image
+      const lastImageInHistory = [...messages].reverse().find(m => m.image)?.image;
+      const imageToSend = selectedImage || lastImageInHistory || undefined;
+
       const response = await fetch(`${BACKEND_URL}/chat`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -424,7 +428,7 @@ ${forceFinalDiagnosis
           model: "gemini-2.5-flash",
           symptoms: enrichedSymptoms,
           history,
-          image: selectedImage || undefined,
+          image: imageToSend,
           ...(patient ? { patient } : {}),
         }),
       })

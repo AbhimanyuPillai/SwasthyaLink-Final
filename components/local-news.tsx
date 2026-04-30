@@ -30,7 +30,7 @@ export function LocalNews() {
   useEffect(() => {
     async function fetchNews() {
       try {
-        const url = "https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fnews.google.com%2Frss%2Fsearch%3Fq%3D%28%22Pune%22%20OR%20%22PCMC%22%20OR%20%22Pimpri%20Chinchwad%22%29%20%28health%20OR%20healthcare%20OR%20hospital%20OR%20medical%20OR%20camp%29%26hl%3Den-IN%26gl%3DIN%26ceid%3DIN%3Aen"
+        const url = "https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fnews.google.com%2Frss%2Fsearch%3Fq%3DPune%2Bhealth%2Bmedical%26hl%3Den-IN%26gl%3DIN%26ceid%3DIN%3Aen"
         const res = await fetch(url)
         const data = await res.json()
         

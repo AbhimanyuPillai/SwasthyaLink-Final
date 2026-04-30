@@ -4,17 +4,6 @@ import { useEffect, useState } from "react"
 import { AlertTriangle, Clock, MapPin, Wind, Thermometer, Droplets, Loader2, ExternalLink } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
-const localHealthReport = {
-  location: "Pune",
-  lastUpdated: "08 Apr 2026, 10:30 AM",
-  summary: `Current health conditions in Pune indicate moderate air quality with AQI at 142. The Maharashtra Health Department has issued a seasonal flu advisory as cases rose 15% in the past two weeks. Citizens are advised to maintain hand hygiene and wear masks in crowded areas. Dengue prevention measures should continue. No new COVID-19 cases reported in 7 days.`,
-  metrics: [
-    { label: "AQI", value: "142", status: "Moderate", icon: Wind },
-    { label: "Temp", value: "32°C", status: "Normal", icon: Thermometer },
-    { label: "Humidity", value: "65%", status: "High", icon: Droplets },
-  ],
-}
-
 interface NewsItem {
   guid: string
   title: string
@@ -26,8 +15,55 @@ interface NewsItem {
 export function LocalNews() {
   const [news, setNews] = useState<NewsItem[]>([])
   const [loading, setLoading] = useState(true)
+  const [healthData, setHealthData] = useState({
+    location: "Pune",
+    lastUpdated: "--",
+    summary: "Fetching current health conditions...",
+    metrics: [
+      { label: "AQI", value: "--", status: "Loading", icon: Wind, colorClass: "bg-card border-border" },
+      { label: "Temp", value: "--", status: "Loading", icon: Thermometer, colorClass: "bg-card border-border" },
+      { label: "Humidity", value: "--", status: "Loading", icon: Droplets, colorClass: "bg-card border-border" },
+    ],
+  })
 
   useEffect(() => {
+    async function fetchHealthData() {
+      try {
+        const [weatherRes, aqiRes] = await Promise.all([
+          fetch("https://api.open-meteo.com/v1/forecast?latitude=18.5204&longitude=73.8567&current=temperature_2m,relative_humidity_2m"),
+          fetch("https://air-quality-api.open-meteo.com/v1/air-quality?latitude=18.5204&longitude=73.8567&current=us_aqi")
+        ])
+        
+        const weatherData = await weatherRes.json()
+        const aqiData = await aqiRes.json()
+
+        const temp = Math.round(weatherData.current.temperature_2m)
+        const humidity = Math.round(weatherData.current.relative_humidity_2m)
+        const aqi = Math.round(aqiData.current.us_aqi)
+
+        const getAqiColor = (val: number) => val <= 50 ? "bg-green-500/20 border-green-500/50" : val <= 100 ? "bg-yellow-500/20 border-yellow-500/50" : "bg-red-500/20 border-red-500/50"
+        const getTempColor = (val: number) => val <= 30 ? "bg-green-500/20 border-green-500/50" : val <= 35 ? "bg-yellow-500/20 border-yellow-500/50" : "bg-red-500/20 border-red-500/50"
+        const getHumidityColor = (val: number) => val <= 50 ? "bg-green-500/20 border-green-500/50" : val <= 70 ? "bg-yellow-500/20 border-yellow-500/50" : "bg-red-500/20 border-red-500/50"
+
+        const now = new Date()
+        const dateStr = now.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })
+        const timeStr = now.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })
+
+        setHealthData({
+          location: "Pune",
+          lastUpdated: `${dateStr}, ${timeStr}`,
+          summary: `Current health conditions in Pune indicate an AQI of ${aqi}. The temperature is ${temp}°C with ${humidity}% humidity. Please take necessary precautions based on these realtime metrics.`,
+          metrics: [
+            { label: "AQI", value: aqi.toString(), status: aqi <= 50 ? "Good" : aqi <= 100 ? "Moderate" : "Poor", icon: Wind, colorClass: getAqiColor(aqi) },
+            { label: "Temp", value: `${temp}°C`, status: temp <= 30 ? "Normal" : temp <= 35 ? "Warm" : "Hot", icon: Thermometer, colorClass: getTempColor(temp) },
+            { label: "Humidity", value: `${humidity}%`, status: humidity <= 50 ? "Normal" : humidity <= 70 ? "Moderate" : "High", icon: Droplets, colorClass: getHumidityColor(humidity) },
+          ]
+        })
+      } catch (error) {
+        console.error("Failed to fetch health data:", error)
+      }
+    }
+
     async function fetchNews() {
       try {
         const url = "https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fnews.google.com%2Frss%2Fsearch%3Fq%3DPune%2Bhealth%2Bmedical%26hl%3Den-IN%26gl%3DIN%26ceid%3DIN%3Aen"
@@ -62,6 +98,7 @@ export function LocalNews() {
       }
     }
 
+    fetchHealthData()
     fetchNews()
   }, [])
 
@@ -73,24 +110,24 @@ export function LocalNews() {
           <div className="flex items-center justify-between">
             <CardTitle className="text-sm font-semibold text-foreground flex items-center gap-1.5">
               <AlertTriangle className="h-4 w-4 text-accent" />
-              Health Report ({localHealthReport.location})
+              Health Report ({healthData.location})
             </CardTitle>
           </div>
           <div className="flex items-center gap-1.5 text-[10px] text-muted-foreground">
             <MapPin className="h-3 w-3" />
-            <span>{localHealthReport.location}</span>
+            <span>{healthData.location}</span>
             <span className="mx-0.5">|</span>
             <Clock className="h-3 w-3" />
-            <span>{localHealthReport.lastUpdated}</span>
+            <span>{healthData.lastUpdated}</span>
           </div>
         </CardHeader>
         <CardContent className="px-3 pb-3">
           {/* Health Metrics */}
           <div className="flex gap-2 mb-3">
-            {localHealthReport.metrics.map((metric) => (
+            {healthData.metrics.map((metric) => (
               <div
                 key={metric.label}
-                className="flex-1 p-2 rounded-md bg-card border border-border text-center"
+                className={`flex-1 p-2 rounded-md border text-center transition-colors ${metric.colorClass}`}
               >
                 <metric.icon className="h-3.5 w-3.5 mx-auto text-primary mb-0.5" />
                 <p className="text-sm font-bold text-foreground">{metric.value}</p>
@@ -105,7 +142,7 @@ export function LocalNews() {
               AI Report
             </span>
             <p className="text-[11px] text-foreground leading-relaxed">
-              {localHealthReport.summary}
+              {healthData.summary}
             </p>
           </div>
         </CardContent>

@@ -31,14 +31,18 @@ export interface MedicalRecord {
 export interface Patient {
   id: string
   swasthyaId?: string
+  swasthya_id?: string
   name?: string
+  fullName?: string
   phone?: string
-  age?: number
+  phoneNumber?: string
+  age?: number | string
   gender?: string
   bloodGroup?: string
   address?: string
   photoUrl?: string
   medicalHistory?: MedicalRecord[]
+  medical_records?: MedicalRecord[] | any[]
 }
 
 interface PatientContextType {
@@ -155,13 +159,21 @@ export function PatientProvider({ children }: { children: ReactNode }) {
     setPatients((prev) =>
       prev.map((p) =>
         p.id === patientId
-          ? { ...p, medicalHistory: [newRecord, ...(p.medicalHistory || [])] }
+          ? {
+            ...p,
+            medicalHistory: [newRecord, ...(p.medicalHistory || [])],
+            medical_records: [newRecord, ...(p.medical_records || [])]
+          }
           : p
       )
     )
     if (currentPatient?.id === patientId) {
       setCurrentPatient((prev) =>
-        prev ? { ...prev, medicalHistory: [newRecord, ...(prev.medicalHistory || [])] } : null
+        prev ? {
+          ...prev,
+          medicalHistory: [newRecord, ...(prev.medicalHistory || [])],
+          medical_records: [newRecord, ...(prev.medical_records || [])]
+        } : null
       )
     }
   }

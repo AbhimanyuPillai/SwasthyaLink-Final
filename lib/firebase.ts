@@ -98,13 +98,16 @@ export const handlePatientLookup = async (searchTerm: string): Promise<Patient |
       id: patientDoc.id,
       ...docData,
       name: docData.full_name || "Unknown Patient",
+      fullName: docData.full_name || docData.name || "Unknown Patient",
       swasthyaId: docData.swasthya_id,
+      swasthya_id: docData.swasthya_id,
       bloodGroup: docData.blood_group || "N/A",
       address: docData.location || "N/A",
       phoneNumber: docData.phone || "N/A",
       age: calculateAge(docData.dob),
       gender: docData.gender || "N/A",
-      medicalHistory
+      medicalHistory,
+      medical_records: medicalHistory
     } as Patient;
 
   } catch (error) {

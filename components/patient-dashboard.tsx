@@ -50,10 +50,10 @@ export function PatientDashboard({ onBack }: PatientDashboardProps) {
             </div>
             <div className="flex-1">
               <h2 className="text-2xl lg:text-3xl font-bold text-primary-foreground mb-1">
-                {currentPatient.name}
+                {currentPatient.fullName}
               </h2>
               <p className="text-primary-foreground/70 text-sm lg:text-base font-mono">
-                {currentPatient.swasthyaId}
+                {currentPatient.swasthya_id || currentPatient.swasthyaId}
               </p>
               <div className="flex flex-wrap items-center gap-3 mt-3">
                 <Badge variant="secondary" className="bg-primary-foreground/20 text-primary-foreground border-0">
@@ -79,7 +79,7 @@ export function PatientDashboard({ onBack }: PatientDashboardProps) {
               </div>
               <div>
                 <p className="text-xs text-muted-foreground">Phone Number</p>
-                <p className="font-medium text-foreground">{currentPatient.phone}</p>
+                <p className="font-medium text-foreground">{currentPatient.phoneNumber}</p>
               </div>
             </div>
             <div className="flex items-center gap-3 p-3 bg-muted/30 rounded-xl">
@@ -109,7 +109,7 @@ export function PatientDashboard({ onBack }: PatientDashboardProps) {
         <Card className="border-border/50">
           <CardContent className="p-4 text-center">
             <div className="text-2xl lg:text-3xl font-bold text-primary mb-1">
-              {currentPatient.medicalHistory?.length || 0}
+              {currentPatient.medical_records?.length || 0}
             </div>
             <div className="text-xs lg:text-sm text-muted-foreground">Total Records</div>
           </CardContent>
@@ -117,8 +117,8 @@ export function PatientDashboard({ onBack }: PatientDashboardProps) {
         <Card className="border-border/50">
           <CardContent className="p-4 text-center">
             <div className="text-2xl lg:text-3xl font-bold text-secondary mb-1">
-              {(currentPatient.medicalHistory?.length || 0) > 0
-                ? new Date(currentPatient.medicalHistory?.[0]?.date || "").toLocaleDateString("en-IN", { month: "short", year: "2-digit" })
+              {(currentPatient.medical_records?.length || 0) > 0
+                ? new Date(currentPatient.medical_records?.[0]?.date || "").toLocaleDateString("en-IN", { month: "short", year: "2-digit" })
                 : "N/A"
               }
             </div>
@@ -145,12 +145,12 @@ export function PatientDashboard({ onBack }: PatientDashboardProps) {
 
       {/* Add New Record Button */}
       <Button
-  onClick={() => setShowAddRecord(true)}
-  className="w-full h-14 text-base font-semibold rounded-xl shadow-lg shadow-green-600/20 hover:shadow-xl hover:shadow-green-600/30 transition-all bg-green-600 hover:bg-green-700 text-white"
->
-  <Plus className="mr-2 w-5 h-5" />
-  Add New Medical Record
-</Button>
+        onClick={() => setShowAddRecord(true)}
+        className="w-full h-14 text-base font-semibold rounded-xl shadow-lg shadow-green-600/20 hover:shadow-xl hover:shadow-green-600/30 transition-all bg-green-600 hover:bg-green-700 text-white"
+      >
+        <Plus className="mr-2 w-5 h-5" />
+        Add New Medical Record
+      </Button>
 
       {/* Medical History */}
       <Card className="border-border/50 shadow-lg">
@@ -161,12 +161,12 @@ export function PatientDashboard({ onBack }: PatientDashboardProps) {
               Medical History
             </CardTitle>
             <Badge variant="outline" className="text-sm px-3 py-1">
-              {currentPatient.medicalHistory?.length || 0} records
+              {currentPatient.medical_records?.length || 0} records
             </Badge>
           </div>
         </CardHeader>
         <CardContent className="p-4 lg:p-6 space-y-4">
-          {(!currentPatient.medicalHistory || currentPatient.medicalHistory.length === 0) ? (
+          {(!currentPatient.medical_records || currentPatient.medical_records.length === 0) ? (
             <div className="text-center py-12">
               <div className="w-20 h-20 rounded-full bg-muted/50 flex items-center justify-center mx-auto mb-4">
                 <FileText className="w-10 h-10 text-muted-foreground/50" />
@@ -177,7 +177,7 @@ export function PatientDashboard({ onBack }: PatientDashboardProps) {
               </p>
             </div>
           ) : (
-            currentPatient.medicalHistory?.map((record, index) => (
+            currentPatient.medical_records?.map((record: any, index: number) => (
               <Card
                 key={record.id}
                 className="border-border/50 bg-gradient-to-br from-muted/30 to-transparent hover:shadow-md transition-all"
@@ -260,7 +260,7 @@ export function PatientDashboard({ onBack }: PatientDashboardProps) {
                       Prescription
                     </p>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                      {record.prescription?.map((med, medIndex) => (
+                      {record.prescription?.map((med: any, medIndex: number) => (
                         <div
                           key={medIndex}
                           className="flex flex-col gap-1 text-sm text-foreground bg-background/60 rounded-lg p-2.5 border border-border/40"

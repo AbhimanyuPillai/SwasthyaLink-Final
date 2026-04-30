@@ -59,10 +59,10 @@ export function NewsReports({ onBack }: NewsReportsProps) {
     async function fetchAllNews() {
       try {
         const queries = [
-          { cat: "alert", q: "Pune health alert outbreak emergency" },
-          { cat: "health", q: "Pune hospital medical surgery" },
-          { cat: "vaccination", q: "Pune vaccination vaccine immunization" },
-          { cat: "general", q: "Pune public health" }
+          { cat: "alert", q: "Pune health alert" },
+          { cat: "health", q: "Pune health medical" },
+          { cat: "vaccination", q: "Pune vaccination" },
+          { cat: "general", q: "Pune hospital health" }
         ] as const;
 
         const results = await Promise.all(

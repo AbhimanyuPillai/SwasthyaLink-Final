@@ -420,6 +420,12 @@ ${forceFinalDiagnosis
       // Maintain visual context: if the backend drops images from history, re-send the latest image
       const lastImageInHistory = [...messages].reverse().find(m => m.image)?.image;
       const imageToSend = selectedImage || lastImageInHistory || undefined;
+      
+      // Strip the "data:image/...;base64," prefix. 
+      // Python's base64.b64decode crashes if this prefix is included, which causes the backend to silently drop the image.
+      const rawImageToSend = imageToSend && imageToSend.includes(",") 
+        ? imageToSend.split(",")[1] 
+        : imageToSend;
 
       const response = await fetch(`${BACKEND_URL}/chat`, {
         method: "POST",
@@ -428,7 +434,7 @@ ${forceFinalDiagnosis
           model: "gemini-2.5-flash",
           symptoms: enrichedSymptoms,
           history,
-          image: imageToSend,
+          image: rawImageToSend,
           ...(patient ? { patient } : {}),
         }),
       })

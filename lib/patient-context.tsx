@@ -18,6 +18,7 @@ export interface PrescriptionItem {
 
 export interface MedicalRecord {
   id: string
+  hospital_id?: string
   date?: string
   hospitalName?: string
   doctorName?: string

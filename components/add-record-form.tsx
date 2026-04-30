@@ -85,6 +85,7 @@ export function AddRecordForm({ onClose, onBack }: AddRecordFormProps) {
 
     const newRecord: Omit<MedicalRecord, "id"> = {
       date: new Date().toISOString().split("T")[0],
+      hospital_id: hospital?.hospital_id || "",
       hospitalName: hospital?.hospital_name || "Unknown Hospital",
       doctorName: hospital?.full_name || "Unknown Doctor",
       symptoms: formData.symptoms,

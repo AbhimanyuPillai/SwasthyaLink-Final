@@ -6,7 +6,8 @@ import { MetricCard } from "@/app/government/components/dashboard/metric-card"
 import { ContentCard } from "@/app/government/components/dashboard/content-card"
 import { AIAnalysisPanel } from "@/app/government/components/dashboard/ai-analysis-panel"
 import { EpidemiologicalDataGrid } from "@/app/government/components/dashboard/epidemiological-data-grid"
-import { AlertTriangle, MapPin, Activity, Users } from "lucide-react"
+import { AlertTriangle, MapPin, Activity, Users, Building2 } from "lucide-react"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/app/government/components/ui/tabs"
 import { useMasterMapData } from "@/app/government/hooks/use-master-map-data"
 import {
   countCriticalZones,
@@ -16,7 +17,7 @@ import {
 import type { MapPoint, MapSeverity } from "@/app/government/lib/map-types"
 import { summarizeMapPoints } from "@/app/government/lib/region-stats"
 import type { EpidemiologicalRecord } from "@/app/government/components/dashboard/epidemiological-data-grid"
-import { PUNE_WARD_PRIMARY_FACILITY } from "@/app/government/lib/pune-facilities"
+import { PUNE_WARD_PRIMARY_FACILITY, PUNE_REPORTING_SITES } from "@/app/government/lib/pune-facilities"
 
 function severityToGridStatus(s: MapSeverity): EpidemiologicalRecord["status"] {
   switch (s) {
@@ -94,9 +95,9 @@ export default function DashboardPage() {
         <main className="flex-1 p-3 sm:p-4 space-y-4 overflow-auto min-w-0 flex flex-col">
           <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-2">
             <div>
-              <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">PMC–PCMC syndromic view</p>
+              <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">Pune Surveillance Dashboard</p>
               <p className="text-sm text-muted-foreground mt-1">
-                Dataset: Pune Metropolitan Region only · coordinates clamped to urban envelope
+                Live tracking of health alerts across the Pune Metropolitan Region
               </p>
             </div>
             <p className="text-xs tabular-nums text-muted-foreground" suppressHydrationWarning>
@@ -104,7 +105,7 @@ export default function DashboardPage() {
             </p>
           </div>
 
-          <section className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+          <section className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <MetricCard
               title="Total Active Cases"
               value={loading ? "…" : totalActive.toLocaleString()}
@@ -120,37 +121,43 @@ export default function DashboardPage() {
               accentColor="emerald"
             />
             <MetricCard
-              title="Affected Population (est.)"
-              value={loading ? "…" : formatPopulation(populationEst)}
-              icon={Users}
+              title="Reporting Facilities"
+              value={PUNE_REPORTING_SITES.length.toString()}
+              icon={Building2}
               trend="neutral"
-              accentColor="saffron"
-            />
-            <MetricCard
-              title="Elevated severity share"
-              value={loading ? "…" : `${spreadPct}%`}
-              icon={AlertTriangle}
-              trend="up"
               accentColor="emerald"
             />
           </section>
 
-          <section className="grid grid-cols-1 lg:grid-cols-2 gap-3 sm:gap-4 flex-1 min-h-0">
-            <ContentCard
-              title="Regional Disease Heatmap"
-              className="flex-1 min-h-[300px] flex flex-col"
-              accentColor="saffron"
-            >
-              <RegionalHeatmap points={masterData} loading={loading} />
-            </ContentCard>
+          <section className="flex-1 min-h-0 flex flex-col mt-2">
+            <Tabs defaultValue="map" className="flex-1 flex flex-col h-full">
+              <div className="flex items-center justify-between mb-4">
+                <TabsList className="bg-muted/50 p-1">
+                  <TabsTrigger value="map" className="px-6 data-[state=active]:bg-background data-[state=active]:shadow-sm">Map View</TabsTrigger>
+                  <TabsTrigger value="data" className="px-6 data-[state=active]:bg-background data-[state=active]:shadow-sm">Data Grid</TabsTrigger>
+                </TabsList>
+              </div>
 
-            <ContentCard
-              title="Epidemiological Data Grid"
-              className="flex-1 min-h-[300px] flex flex-col"
-              accentColor="emerald"
-            >
-              <EpidemiologicalDataGrid rows={epidemiologicalRows} loading={loading} />
-            </ContentCard>
+              <TabsContent value="map" className="flex-1 m-0 h-full">
+                <ContentCard
+                  title="Regional Disease Heatmap"
+                  className="h-full flex flex-col"
+                  accentColor="saffron"
+                >
+                  <RegionalHeatmap points={masterData} loading={loading} />
+                </ContentCard>
+              </TabsContent>
+
+              <TabsContent value="data" className="flex-1 m-0 h-full">
+                <ContentCard
+                  title="Epidemiological Data Grid"
+                  className="h-full flex flex-col"
+                  accentColor="emerald"
+                >
+                  <EpidemiologicalDataGrid rows={epidemiologicalRows} loading={loading} />
+                </ContentCard>
+              </TabsContent>
+            </Tabs>
           </section>
         </main>
 

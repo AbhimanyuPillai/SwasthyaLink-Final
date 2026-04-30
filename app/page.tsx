@@ -58,25 +58,34 @@ export default function LandingPage() {
   const titleY = useTransform(scrollYProgress, [0, 0.25], ["0%", "-32vh"])
   const titleScale = useTransform(scrollYProgress, [0, 0.25], [1, 0.45])
 
-  // Frame Animation Index
-  const frameCount = 40
-  const frameIndex = useTransform(scrollYProgress, [0.0, 0.8], [1, frameCount])
-  const imageRef = useRef<HTMLImageElement>(null)
+  // Animation state management
+  const [animationStatus, setAnimationStatus] = useState<'idle' | 'playing' | 'ended'>('idle')
+  const timerRef = useRef<NodeJS.Timeout | null>(null)
 
   useEffect(() => {
-    // Preload images for smoother scrolling
-    for (let i = 1; i <= frameCount; i++) {
-      const img = new window.Image()
-      img.src = `/images/frames/frame (${i}).jpg`
-    }
-
-    return frameIndex.on("change", (latest) => {
-      const idx = Math.min(Math.max(Math.round(latest), 1), frameCount)
-      if (imageRef.current) {
-        imageRef.current.src = `/images/frames/frame (${idx}).jpg`
+    const unsubscribe = scrollYProgress.on("change", (latest) => {
+      // 1. Trigger Playback (Trigger slightly earlier to avoid flicker)
+      if (latest > 0.02 && animationStatus === 'idle') {
+        setAnimationStatus('playing')
+        
+        if (timerRef.current) clearTimeout(timerRef.current)
+        timerRef.current = setTimeout(() => {
+          setAnimationStatus('ended')
+        }, 2000) 
+      }
+      
+      // 2. Force End at scroll threshold
+      if (latest >= 0.8 && animationStatus !== 'ended') {
+        setAnimationStatus('ended')
+        if (timerRef.current) clearTimeout(timerRef.current)
       }
     })
-  }, [frameIndex, frameCount])
+
+    return () => {
+      unsubscribe()
+      if (timerRef.current) clearTimeout(timerRef.current)
+    }
+  }, [scrollYProgress, animationStatus])
 
   // Logo Opacity - Solid transition
   const logoOpacity = useTransform(scrollYProgress, [0.0, 0.1, 0.8, 1], [0, 1, 1, 1])
@@ -124,7 +133,7 @@ export default function LandingPage() {
             SwasthyaLink
           </motion.div>
 
-          {/* Logo Frame Animation */}
+          {/* Logo Animation (Flicker-free Stack) */}
           <motion.div
             style={{
               opacity: logoOpacity,
@@ -132,12 +141,28 @@ export default function LandingPage() {
             }}
             className="frame-container"
           >
+            {/* The Static Frame (Shown when ended or idle) */}
             <img
-              ref={imageRef}
-              src={`/images/frames/frame (1).jpg`}
-              alt="Surveillance Animation"
+              src="/images/frame (40).jpg"
+              alt="SwasthyaLink Logo"
               className="frame-img"
+              style={{ 
+                position: 'absolute', 
+                inset: 0,
+                opacity: animationStatus === 'ended' ? 1 : 0,
+                visibility: animationStatus === 'playing' ? 'hidden' : 'visible'
+              }}
             />
+
+            {/* The GIF (Only mounted/shown when playing) */}
+            {animationStatus === 'playing' && (
+              <img
+                src="/images/ezgif-6219966d4db56dc2.gif"
+                alt="SwasthyaLink Animation"
+                className="frame-img"
+                style={{ position: 'absolute', inset: 0 }}
+              />
+            )}
           </motion.div>
 
           <motion.div

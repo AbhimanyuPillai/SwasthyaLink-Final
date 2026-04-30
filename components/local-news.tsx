@@ -49,10 +49,36 @@ export function LocalNews() {
         const dateStr = now.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' })
         const timeStr = now.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })
 
+        let aiSummary = "";
+        try {
+          const prompt = `Write a short 2 line health suggestion based on AQI ${aqi}, Temperature ${temp}C, and Humidity ${humidity}% in Pune.`;
+          const controller = new AbortController();
+          const timeoutId = setTimeout(() => controller.abort(), 4000);
+          const aiRes = await fetch(`https://text.pollinations.ai/${encodeURIComponent(prompt)}`, { signal: controller.signal });
+          clearTimeout(timeoutId);
+          if (aiRes.ok) {
+            aiSummary = await aiRes.text();
+          }
+        } catch (e) {
+          console.log("AI API timeout or failed, using fallback.");
+        }
+
+        if (!aiSummary || aiSummary.length < 10) {
+          let suggestions = [];
+          if (temp > 35) suggestions.push("Please use sun protection and stay hydrated.");
+          else if (temp < 20) suggestions.push("Wear warm clothing.");
+          if (aqi > 100) suggestions.push("Consider wearing a mask outdoors.");
+          if (humidity > 70) suggestions.push("Expect uncomfortable muggy conditions.");
+          
+          if (suggestions.length === 0) suggestions.push("Please take basic health precautions based on these realtime metrics.");
+          
+          aiSummary = `Current health conditions in Pune indicate an AQI of ${aqi}. The temperature is ${temp}°C with ${humidity}% humidity. ${suggestions.join(" ")}`.trim();
+        }
+
         setHealthData({
           location: "Pune",
           lastUpdated: `${dateStr}, ${timeStr}`,
-          summary: `Current health conditions in Pune indicate an AQI of ${aqi}. The temperature is ${temp}°C with ${humidity}% humidity. Please take necessary precautions based on these realtime metrics.`,
+          summary: aiSummary,
           metrics: [
             { label: "AQI", value: aqi.toString(), status: aqi <= 50 ? "Good" : aqi <= 100 ? "Moderate" : "Poor", icon: Wind, colorClass: getAqiColor(aqi) },
             { label: "Temp", value: `${temp}°C`, status: temp <= 30 ? "Normal" : temp <= 35 ? "Warm" : "Hot", icon: Thermometer, colorClass: getTempColor(temp) },

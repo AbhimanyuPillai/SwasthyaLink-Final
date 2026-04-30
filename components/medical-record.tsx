@@ -57,8 +57,8 @@ export function MedicalRecord() {
               date: dateDisplay,
               hospitalName: data.hospitalName || data.location || "Private Clinic",
               diagnosis: data.diagnosis || "No specific diagnosis recorded",
-              symptoms: Array.isArray(data.symptoms) ? data.symptoms : (data.symptoms ? [data.symptoms] : []),
-              prescriptions: Array.isArray(data.prescription) ? data.prescriptions : (data.prescriptions ? [data.prescriptions] : []),
+              symptoms: Array.isArray(data.symptoms) ? data.symptoms : (Array.isArray(data.symptom) ? data.symptom : (data.symptoms || data.symptom ? [data.symptoms || data.symptom] : [])),
+              prescriptions: Array.isArray(data.prescriptions) ? data.prescriptions : (Array.isArray(data.prescription) ? data.prescription : (data.prescriptions || data.prescription ? [data.prescriptions || data.prescription] : [])),
               notes: data.doctorNotes || data.notes || "No additional notes provided.",
               followUp: data.followUpDate ? (data.followUpDate.toDate ? format(data.followUpDate.toDate(), "dd MMM yyyy") : data.followUpDate) : undefined
             }
@@ -212,7 +212,7 @@ export function MedicalRecord() {
                 <FileText className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
                 <div>
                   <p className="text-[10px] text-muted-foreground uppercase font-medium">Diagnosis</p>
-                  <p className="text-xs text-foreground font-medium">{selectedConsultation.diagnosis}</p>
+                  <p className="text-xs text-foreground font-medium">{typeof selectedConsultation.diagnosis === 'object' && selectedConsultation.diagnosis !== null ? Object.values(selectedConsultation.diagnosis).join(', ') : String(selectedConsultation.diagnosis)}</p>
                 </div>
               </div>
 
@@ -222,10 +222,10 @@ export function MedicalRecord() {
                 <div className="flex-1">
                   <p className="text-[10px] text-muted-foreground uppercase font-medium">Symptoms</p>
                   <ul className="mt-1 space-y-0.5">
-                    {selectedConsultation.symptoms.map((symptom, idx) => (
-                      <li key={idx} className="text-xs text-foreground flex items-center gap-1.5">
-                        <span className="w-1 h-1 rounded-full bg-muted-foreground" />
-                        {symptom}
+                    {selectedConsultation.symptoms?.map((symptom, idx) => (
+                      <li key={idx} className="text-xs text-foreground flex items-start gap-1.5 mt-0.5">
+                        <span className="w-1 h-1 rounded-full bg-muted-foreground mt-1.5 flex-shrink-0" />
+                        <span>{typeof symptom === 'object' && symptom !== null ? Object.values(symptom).join(' - ') : String(symptom)}</span>
                       </li>
                     ))}
                   </ul>
@@ -238,10 +238,10 @@ export function MedicalRecord() {
                 <div className="flex-1">
                   <p className="text-[10px] text-muted-foreground uppercase font-medium">Prescriptions</p>
                   <ul className="mt-1 space-y-0.5">
-                    {selectedConsultation.prescriptions.map((prescription, idx) => (
-                      <li key={idx} className="text-xs text-foreground flex items-center gap-1.5">
-                        <span className="w-1 h-1 rounded-full bg-secondary" />
-                        {prescription}
+                    {selectedConsultation.prescriptions?.map((prescription, idx) => (
+                      <li key={idx} className="text-xs text-foreground flex items-start gap-1.5 mt-0.5">
+                        <span className="w-1 h-1 rounded-full bg-secondary mt-1.5 flex-shrink-0" />
+                        <span>{typeof prescription === 'object' && prescription !== null ? Object.values(prescription).join(' - ') : String(prescription)}</span>
                       </li>
                     ))}
                   </ul>
@@ -251,7 +251,7 @@ export function MedicalRecord() {
               {/* Notes */}
               <div className="bg-muted/50 rounded-md p-2.5">
                 <p className="text-[10px] text-muted-foreground uppercase font-medium mb-1">Doctor&apos;s Notes</p>
-                <p className="text-xs text-foreground leading-relaxed">{selectedConsultation.notes}</p>
+                <p className="text-xs text-foreground leading-relaxed">{typeof selectedConsultation.notes === 'object' && selectedConsultation.notes !== null ? Object.values(selectedConsultation.notes).join(', ') : String(selectedConsultation.notes)}</p>
               </div>
 
               {/* Follow-up */}

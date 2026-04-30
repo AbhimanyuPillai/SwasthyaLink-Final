@@ -35,6 +35,15 @@ export function PatientDashboard({ onBack }: PatientDashboardProps) {
     return null
   }
 
+  // Sort records by date descending (latest first)
+  const sortedRecords = currentPatient.medical_records
+    ? [...currentPatient.medical_records].sort((a: any, b: any) => {
+      const dateA = new Date(a.date || 0).getTime()
+      const dateB = new Date(b.date || 0).getTime()
+      return dateB - dateA
+    })
+    : []
+
   if (showAddRecord) {
     return <AddRecordForm onClose={() => setShowAddRecord(false)} onBack={onBack} />
   }
@@ -116,9 +125,9 @@ export function PatientDashboard({ onBack }: PatientDashboardProps) {
         </Card>
         <Card className="border-border/50">
           <CardContent className="p-4 text-center">
-            <div className="text-2xl lg:text-3xl font-bold text-secondary mb-1">
-              {(currentPatient.medical_records?.length || 0) > 0
-                ? new Date(currentPatient.medical_records?.[0]?.date || "").toLocaleDateString("en-IN", { month: "short", year: "2-digit" })
+            <div className="text-2xl lg:text-3xl font-bold text-green-600 mb-1">
+              {sortedRecords.length > 0
+                ? new Date(sortedRecords[0]?.date || "").toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })
                 : "N/A"
               }
             </div>
@@ -166,7 +175,7 @@ export function PatientDashboard({ onBack }: PatientDashboardProps) {
           </div>
         </CardHeader>
         <CardContent className="p-4 lg:p-6 space-y-4">
-          {(!currentPatient.medical_records || currentPatient.medical_records.length === 0) ? (
+          {sortedRecords.length === 0 ? (
             <div className="text-center py-12">
               <div className="w-20 h-20 rounded-full bg-muted/50 flex items-center justify-center mx-auto mb-4">
                 <FileText className="w-10 h-10 text-muted-foreground/50" />
@@ -177,7 +186,7 @@ export function PatientDashboard({ onBack }: PatientDashboardProps) {
               </p>
             </div>
           ) : (
-            currentPatient.medical_records?.map((record: any, index: number) => (
+            sortedRecords.map((record: any, index: number) => (
               <Card
                 key={record.id}
                 className="border-border/50 bg-gradient-to-br from-muted/30 to-transparent hover:shadow-md transition-all"
@@ -254,8 +263,8 @@ export function PatientDashboard({ onBack }: PatientDashboardProps) {
                   </div>
 
                   {/* Prescription */}
-                  <div className="p-4 bg-gradient-to-r from-secondary/10 to-secondary/5 rounded-xl border border-secondary/20">
-                    <p className="text-xs font-semibold text-secondary uppercase tracking-wide mb-3 flex items-center gap-1.5">
+                  <div className="p-4 bg-gradient-to-r from-green-600/10 to-green-600/5 rounded-xl border border-green-600/20">
+                    <p className="text-xs font-semibold text-green-600 uppercase tracking-wide mb-3 flex items-center gap-1.5">
                       <Pill className="w-3.5 h-3.5" />
                       Prescription
                     </p>
@@ -263,11 +272,11 @@ export function PatientDashboard({ onBack }: PatientDashboardProps) {
                       {record.prescription?.map((med: any, medIndex: number) => (
                         <div
                           key={medIndex}
-                          className="flex flex-col gap-1 text-sm text-foreground bg-background/60 rounded-lg p-2.5 border border-border/40"
+                          className="flex flex-col gap-1 text-sm text-foreground bg-background rounded-lg p-2.5 border border-green-600/20 shadow-sm"
                         >
                           <div className="flex items-start gap-2 font-medium">
-                            <ClipboardList className="w-4 h-4 mt-0.5 text-secondary flex-shrink-0" />
-                            <span>{med.medicineName}</span>
+                            <ClipboardList className="w-4 h-4 mt-0.5 text-green-600 flex-shrink-0" />
+                            <span className="text-foreground">{med.medicineName}</span>
                           </div>
                           <div className="flex gap-2 text-xs text-muted-foreground pl-6">
                             <span>{med.timing}</span>

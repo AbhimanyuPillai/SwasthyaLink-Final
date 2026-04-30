@@ -163,26 +163,36 @@ function AssistantBubble({ message, isHydrated }: { message: Message; isHydrated
     message.chatData.recommended_specialist
   )
 
+  const isEmergency = message.chatData?.probable_ailment?.toUpperCase().includes("EMERGENCY")
+
   return (
-    <div className="bg-card text-foreground border border-border rounded-2xl rounded-tl-sm shadow-sm overflow-hidden max-w-[90%]">
+    <div className={`bg-card text-foreground border rounded-2xl rounded-tl-sm shadow-sm overflow-hidden max-w-[90%] ${
+      isEmergency ? "border-destructive bg-destructive/5" : "border-border"
+    }`}>
       {hasStructuredData ? (
         <div>
           {/* Medical Assessment Section */}
           <div className="px-4 pt-3 pb-3 space-y-3">
             {message.chatData!.probable_ailment && message.chatData!.probable_ailment.toLowerCase() !== "pending" && (
               <div className="flex gap-2 items-start">
-                <span className="text-[10px] font-bold text-primary uppercase tracking-wide w-28 flex-shrink-0 pt-0.5">
-                  Probable Ailment
+                <span className={`text-[10px] font-bold uppercase tracking-wide w-28 flex-shrink-0 pt-0.5 ${
+                  isEmergency ? "text-destructive" : "text-primary"
+                }`}>
+                  {isEmergency ? "🚨 Critical Alert" : "Probable Ailment"}
                 </span>
-                <span className="text-sm text-foreground font-medium leading-snug">{message.chatData!.probable_ailment}</span>
+                <span className={`text-sm font-medium leading-snug ${isEmergency ? "text-destructive font-bold" : "text-foreground"}`}>
+                  {message.chatData!.probable_ailment.replace(/EMERGENCY:\s*/i, "")}
+                </span>
               </div>
             )}
             {message.chatData!.recommended_specialist && message.chatData!.recommended_specialist.toLowerCase() !== "pending" && (
               <div className="flex gap-2 items-start">
-                <span className="text-[10px] font-bold text-primary uppercase tracking-wide w-28 flex-shrink-0 pt-0.5">
-                  See a
+                <span className={`text-[10px] font-bold uppercase tracking-wide w-28 flex-shrink-0 pt-0.5 ${
+                  isEmergency ? "text-destructive" : "text-primary"
+                }`}>
+                  {isEmergency ? "Immediate Action" : "See a"}
                 </span>
-                <span className="text-sm font-medium text-foreground leading-snug">
+                <span className={`text-sm font-medium leading-snug ${isEmergency ? "text-destructive font-bold" : "text-foreground"}`}>
                   {message.chatData!.recommended_specialist}
                 </span>
               </div>
@@ -190,9 +200,15 @@ function AssistantBubble({ message, isHydrated }: { message: Message; isHydrated
             {message.chatData!.care_points && (
               <div className="pt-1">
                 {(message.chatData!.probable_ailment && message.chatData!.probable_ailment.toLowerCase() !== "pending") && (
-                  <p className="text-[10px] font-bold text-primary uppercase tracking-wide mb-1.5">Analysis & Care Points</p>
+                  <p className={`text-[10px] font-bold uppercase tracking-wide mb-1.5 ${
+                    isEmergency ? "text-destructive" : "text-primary"
+                  }`}>
+                    {isEmergency ? "Emergency Instructions" : "Analysis & Care Points"}
+                  </p>
                 )}
-                <div className="text-sm text-foreground/90 leading-relaxed whitespace-pre-line bg-muted/40 p-3 rounded-lg border border-border/50">
+                <div className={`text-sm leading-relaxed whitespace-pre-line p-3 rounded-lg border ${
+                  isEmergency ? "bg-destructive/10 text-destructive border-destructive/20 font-medium" : "text-foreground/90 bg-muted/40 border-border/50"
+                }`}>
                   {message.chatData!.care_points}
                 </div>
               </div>
@@ -405,7 +421,7 @@ export function AskAgent() {
 
       const baseInstruction = `System Instruction:
 1. ALWAYS consider the patient's full profile details (height, weight, pre-existing conditions like diabetes, BP, etc.) stored in the database.
-2. EMERGENCY: If the symptoms combined with health history point to an emergency, immediately provide critical life-saving instructions and recommend emergency actions in 'care_points'. Do NOT ask follow-ups in this case.
+2. EMERGENCY: If the symptoms combined with health history point to an emergency (e.g., chest pain, severe bleeding, stroke), IMMEDIATELY return a FINAL DIAGNOSIS. Set 'probable_ailment' to start exactly with the word "EMERGENCY: " followed by the condition. Set 'recommended_specialist' to "Emergency Room". Provide critical life-saving instructions in 'care_points'. Do NOT ask follow-up questions.
 ${forceFinalDiagnosis 
 ? `3. FINAL DIAGNOSIS REQUIRED: You have asked enough questions. You MUST now provide a detailed medical analysis (explicitly stating factors like "Considering your weight of X kg...") and a CLEAR final diagnosis along with healthcare suggestions. DO NOT ask any more follow-up questions.` 
 : `3. FOLLOW-UPS: If it is NOT an emergency, FIRST ask exactly ONE simple, one-line follow-up question to gather necessary information. If an image was uploaded, you MUST explicitly mention what you see in the image so the user knows you analyzed it. Do NOT include your full internal analysis or generic advice when asking a follow-up. Just ask the question naturally.`}

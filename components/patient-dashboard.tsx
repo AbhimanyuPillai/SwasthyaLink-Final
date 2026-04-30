@@ -236,8 +236,8 @@ export function PatientDashboard({ onBack }: PatientDashboardProps) {
                     </div>
 
                     {/* Doctor Advice */}
-                    <div className="p-4 bg-background rounded-xl border border-border/50">
-                      <p className="text-xs font-semibold text-secondary uppercase tracking-wide mb-2 flex items-center gap-1.5">
+                    <div className="p-4 bg-gradient-to-r from-green-600/10 to-green-600/5 rounded-xl border border-green-600/20">
+                      <p className="text-xs font-semibold text-green-600 uppercase tracking-wide mb-2 flex items-center gap-1.5">
                         <Stethoscope className="w-3.5 h-3.5" />
                         Doctor&apos;s Advice
                       </p>

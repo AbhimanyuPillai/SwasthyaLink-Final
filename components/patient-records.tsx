@@ -304,12 +304,12 @@ export function PatientRecords({ onBack, onViewPatient }: PatientRecordsProps) {
               </div>
               <p className="text-3xl lg:text-4xl font-bold text-primary">{uniquePatients.length}</p>
             </div>
-            <div className="bg-gradient-to-br from-secondary/20 to-secondary/10 rounded-xl p-4 lg:p-6 border border-secondary/30">
+            <div className="bg-gradient-to-br from-green-600/10 to-green-600/5 rounded-xl p-4 lg:p-6 border border-green-600/20">
               <div className="flex items-center gap-3 mb-2">
-                <TrendingUp className="w-5 h-5 text-secondary" />
+                <TrendingUp className="w-5 h-5 text-green-600" />
                 <span className="text-sm text-muted-foreground">Total Visits</span>
               </div>
-              <p className="text-3xl lg:text-4xl font-bold text-secondary">{filteredVisits.length}</p>
+              <p className="text-3xl lg:text-4xl font-bold text-green-600">{filteredVisits.length}</p>
             </div>
           </div>
         </CardContent>

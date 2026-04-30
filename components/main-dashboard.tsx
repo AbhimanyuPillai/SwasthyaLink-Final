@@ -1,7 +1,9 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useAuth } from "@/lib/auth-context"
+import { db } from "@/lib/firebase"
+import { collectionGroup, query, where, getDocs } from "firebase/firestore"
 import { ProfilePopup } from "@/components/profile-popup"
 import { PatientLookup } from "@/components/patient-lookup"
 import { QRScanner } from "@/components/qr-scanner"
@@ -196,6 +198,29 @@ export function MainDashboard() {
 }
 
 function MainGrid({ onNavigate }: { onNavigate: (view: View) => void }) {
+  const { hospital } = useAuth();
+  const [todaysVisits, setTodaysVisits] = useState<number | "...">("...");
+
+  useEffect(() => {
+    const fetchTodaysVisits = async () => {
+      if (!hospital?.hospital_id) return;
+      try {
+        const todayDateString = new Date().toISOString().split("T")[0];
+        const q = query(
+          collectionGroup(db, "medical_records"),
+          where("hospital_id", "==", hospital.hospital_id),
+          where("date", "==", todayDateString)
+        );
+        const snapshot = await getDocs(q);
+        setTodaysVisits(snapshot.docs.length);
+      } catch (err) {
+        console.error("Error fetching today's visits:", err);
+        setTodaysVisits(0);
+      }
+    };
+    fetchTodaysVisits();
+  }, [hospital?.hospital_id]);
+
   const menuItems = [
     {
       id: "manual-entry",
@@ -273,7 +298,7 @@ function MainGrid({ onNavigate }: { onNavigate: (view: View) => void }) {
       <div className="mt-8 lg:mt-12 grid grid-cols-2 lg:grid-cols-4 gap-4">
         <Card className="border-border/50">
           <CardContent className="p-4 lg:p-6 text-center">
-            <div className="text-3xl lg:text-4xl font-bold text-primary mb-1">24</div>
+            <div className="text-3xl lg:text-4xl font-bold text-primary mb-1">{todaysVisits}</div>
             <div className="text-xs lg:text-sm text-muted-foreground">Today's Visits</div>
           </CardContent>
         </Card>

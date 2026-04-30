@@ -1,11 +1,11 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Newspaper, Calendar, MapPin, ExternalLink, Search, AlertTriangle, HeartPulse, Syringe, TrendingUp } from "lucide-react"
+import { Newspaper, Calendar, MapPin, ExternalLink, Search, AlertTriangle, HeartPulse, Syringe, TrendingUp, Loader2 } from "lucide-react"
 
 interface NewsReportsProps {
   onBack: () => void
@@ -21,69 +21,6 @@ interface NewsItem {
   category: "alert" | "health" | "vaccination" | "general"
   url: string
 }
-
-const mockNews: NewsItem[] = [
-  {
-    id: "news-001",
-    title: "Dengue Cases on the Rise in Mumbai Metropolitan Region",
-    summary: "Health authorities report a 30% increase in dengue cases this monsoon season. Residents are advised to take preventive measures and eliminate standing water sources.",
-    source: "Maharashtra Health Department",
-    date: "2024-03-15",
-    location: "Mumbai, Maharashtra",
-    category: "alert",
-    url: "#",
-  },
-  {
-    id: "news-002",
-    title: "Free Health Camp Organized at Community Center",
-    summary: "A free health checkup camp will be organized next week offering blood pressure screening, diabetes testing, and general health consultations for senior citizens.",
-    source: "Municipal Corporation",
-    date: "2024-03-14",
-    location: "Andheri, Mumbai",
-    category: "health",
-    url: "#",
-  },
-  {
-    id: "news-003",
-    title: "COVID-19 Booster Vaccination Drive Extended",
-    summary: "The government has extended the free booster dose vaccination program until the end of the month. All adults are eligible for the updated vaccine at government hospitals.",
-    source: "Ministry of Health",
-    date: "2024-03-13",
-    location: "Pan India",
-    category: "vaccination",
-    url: "#",
-  },
-  {
-    id: "news-004",
-    title: "New Telemedicine Guidelines Released for Remote Consultations",
-    summary: "The Medical Council has issued updated guidelines for telemedicine practice, allowing doctors to prescribe a wider range of medications through video consultations.",
-    source: "Medical Council of India",
-    date: "2024-03-12",
-    location: "National",
-    category: "general",
-    url: "#",
-  },
-  {
-    id: "news-005",
-    title: "Air Quality Index Reaches Hazardous Levels - Health Advisory Issued",
-    summary: "Due to poor air quality, residents with respiratory conditions are advised to stay indoors. N95 masks are recommended for outdoor activities.",
-    source: "Pollution Control Board",
-    date: "2024-03-11",
-    location: "Delhi NCR",
-    category: "alert",
-    url: "#",
-  },
-  {
-    id: "news-006",
-    title: "Free Eye Checkup Camp for School Children",
-    summary: "Vision screening program for government school students will be conducted throughout the district. Free spectacles will be provided to children with refractive errors.",
-    source: "District Health Office",
-    date: "2024-03-10",
-    location: "Pune, Maharashtra",
-    category: "health",
-    url: "#",
-  },
-]
 
 const categoryConfig = {
   alert: { 
@@ -115,8 +52,79 @@ const categoryConfig = {
 export function NewsReports({ onBack }: NewsReportsProps) {
   const [searchQuery, setSearchQuery] = useState("")
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
+  const [newsList, setNewsList] = useState<NewsItem[]>([])
+  const [loading, setLoading] = useState(true)
 
-  const filteredNews = mockNews.filter((news) => {
+  useEffect(() => {
+    async function fetchAllNews() {
+      try {
+        const queries = [
+          { cat: "alert", q: "Pune health alert outbreak emergency" },
+          { cat: "health", q: "Pune hospital medical surgery" },
+          { cat: "vaccination", q: "Pune vaccination vaccine immunization" },
+          { cat: "general", q: "Pune public health" }
+        ] as const;
+
+        const results = await Promise.all(
+          queries.map(async ({ cat, q }) => {
+            const url = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(`https://news.google.com/rss/search?q=${q}&hl=en-IN&gl=IN&ceid=IN:en`)}`
+            try {
+              const res = await fetch(url)
+              const data = await res.json()
+              return { cat, items: data.status === "ok" ? (data.items || []) : [] }
+            } catch (err) {
+              console.error(`Error fetching ${cat}:`, err)
+              return { cat, items: [] }
+            }
+          })
+        )
+
+        const allItems: NewsItem[] = []
+        const seenUrls = new Set<string>()
+
+        results.forEach(({ cat, items }) => {
+          items.forEach((item: any) => {
+            const url = item.link
+            if (!seenUrls.has(url)) {
+              seenUrls.add(url)
+              
+              const titleParts = item.title.split(" - ")
+              const source = titleParts.length > 1 ? titleParts.pop() : "Google News"
+              const cleanTitle = titleParts.join(" - ")
+              
+              // Clean description by stripping basic HTML tags if any, otherwise use title as summary fallback
+              const summaryText = item.description 
+                ? item.description.replace(/<[^>]*>?/gm, '').slice(0, 150) + "..."
+                : cleanTitle
+
+              allItems.push({
+                id: item.guid || url,
+                title: cleanTitle,
+                summary: summaryText,
+                source: source,
+                date: item.pubDate, // raw format, will be formatted in render
+                location: "Pune, Maharashtra",
+                category: cat as "alert" | "health" | "vaccination" | "general",
+                url: url
+              })
+            }
+          })
+        })
+
+        // Sort by date descending
+        allItems.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+        setNewsList(allItems)
+      } catch (error) {
+        console.error("Failed to fetch news reports:", error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchAllNews()
+  }, [])
+
+  const filteredNews = newsList.filter((news) => {
     const matchesSearch =
       news.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       news.summary.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -197,7 +205,7 @@ export function NewsReports({ onBack }: NewsReportsProps) {
             </div>
             <div>
               <p className="text-lg font-bold text-foreground">
-                {mockNews.filter(n => n.category === "alert").length}
+                {newsList.filter(n => n.category === "alert").length}
               </p>
               <p className="text-xs text-muted-foreground">Alerts</p>
             </div>
@@ -210,7 +218,7 @@ export function NewsReports({ onBack }: NewsReportsProps) {
             </div>
             <div>
               <p className="text-lg font-bold text-foreground">
-                {mockNews.filter(n => n.category === "health").length}
+                {newsList.filter(n => n.category === "health").length}
               </p>
               <p className="text-xs text-muted-foreground">Health News</p>
             </div>
@@ -223,7 +231,7 @@ export function NewsReports({ onBack }: NewsReportsProps) {
             </div>
             <div>
               <p className="text-lg font-bold text-foreground">
-                {mockNews.filter(n => n.category === "vaccination").length}
+                {newsList.filter(n => n.category === "vaccination").length}
               </p>
               <p className="text-xs text-muted-foreground">Vaccinations</p>
             </div>
@@ -235,7 +243,7 @@ export function NewsReports({ onBack }: NewsReportsProps) {
               <TrendingUp className="w-5 h-5 text-accent" />
             </div>
             <div>
-              <p className="text-lg font-bold text-foreground">{mockNews.length}</p>
+              <p className="text-lg font-bold text-foreground">{newsList.length}</p>
               <p className="text-xs text-muted-foreground">Total Updates</p>
             </div>
           </CardContent>
@@ -244,7 +252,17 @@ export function NewsReports({ onBack }: NewsReportsProps) {
 
       {/* News List */}
       <div className="space-y-4">
-        {filteredNews.length === 0 ? (
+        {loading ? (
+          <Card className="border-border/50">
+            <CardContent className="py-16 text-center flex flex-col items-center">
+              <Loader2 className="h-10 w-10 text-primary/50 animate-spin mb-4" />
+              <p className="text-lg font-medium text-foreground mb-1">Fetching Local Updates</p>
+              <p className="text-muted-foreground">
+                Retrieving data for Pune...
+              </p>
+            </CardContent>
+          </Card>
+        ) : filteredNews.length === 0 ? (
           <Card className="border-border/50">
             <CardContent className="py-16 text-center">
               <div className="w-20 h-20 rounded-full bg-muted/50 flex items-center justify-center mx-auto mb-4">
@@ -260,51 +278,60 @@ export function NewsReports({ onBack }: NewsReportsProps) {
           filteredNews.map((news) => {
             const config = categoryConfig[news.category]
             return (
-              <Card 
+              <a 
                 key={news.id} 
-                className={`border-border/50 hover:shadow-lg transition-all ${config.cardBorder} overflow-hidden`}
+                href={news.url} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="block outline-none"
               >
-                <CardContent className="p-4 lg:p-6">
-                  <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 mb-3">
-                    <Badge className={`${config.color} w-fit`}>
-                      <config.icon className="w-3 h-3 mr-1.5" />
-                      {config.label}
-                    </Badge>
-                    <div className="flex items-center gap-1.5 text-sm text-muted-foreground">
-                      <Calendar className="w-4 h-4" />
-                      {new Date(news.date).toLocaleDateString("en-IN", {
-                        day: "numeric",
-                        month: "short",
-                        year: "numeric",
-                      })}
-                    </div>
-                  </div>
-
-                  <h3 className="font-semibold text-foreground text-lg leading-tight mb-2">
-                    {news.title}
-                  </h3>
-
-                  <p className="text-muted-foreground leading-relaxed mb-4">
-                    {news.summary}
-                  </p>
-
-                  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pt-4 border-t border-border/50">
-                    <div className="flex flex-wrap items-center gap-4">
+                <Card 
+                  className={`border-border/50 hover:shadow-lg transition-all ${config.cardBorder} overflow-hidden group`}
+                >
+                  <CardContent className="p-4 lg:p-6">
+                    <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 mb-3">
+                      <Badge className={`${config.color} w-fit`}>
+                        <config.icon className="w-3 h-3 mr-1.5" />
+                        {config.label}
+                      </Badge>
                       <div className="flex items-center gap-1.5 text-sm text-muted-foreground">
-                        <MapPin className="w-4 h-4" />
-                        {news.location}
+                        <Calendar className="w-4 h-4" />
+                        {new Date(news.date).toLocaleDateString("en-IN", {
+                          day: "numeric",
+                          month: "short",
+                          year: "numeric",
+                        })}
                       </div>
-                      <span className="text-sm text-muted-foreground">
-                        Source: <span className="font-medium">{news.source}</span>
-                      </span>
                     </div>
-                    <Button variant="ghost" size="sm" className="text-primary gap-1.5 -mr-2">
-                      Read Full Article
-                      <ExternalLink className="w-4 h-4" />
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
+
+                    <h3 className="font-semibold text-foreground text-lg leading-tight mb-2 group-hover:text-primary transition-colors">
+                      {news.title}
+                    </h3>
+
+                    <p className="text-muted-foreground leading-relaxed mb-4 line-clamp-3">
+                      {news.summary}
+                    </p>
+
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pt-4 border-t border-border/50">
+                      <div className="flex flex-wrap items-center gap-4">
+                        <div className="flex items-center gap-1.5 text-sm text-muted-foreground">
+                          <MapPin className="w-4 h-4" />
+                          {news.location}
+                        </div>
+                        <span className="text-sm text-muted-foreground">
+                          Source: <span className="font-medium">{news.source}</span>
+                        </span>
+                      </div>
+                      <Button variant="ghost" size="sm" className="text-primary gap-1.5 -mr-2" asChild>
+                        <span>
+                          Read Full Article
+                          <ExternalLink className="w-4 h-4" />
+                        </span>
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              </a>
             )
           })
         )}

@@ -8,22 +8,22 @@ import { Checkbox } from "@/app/government/components/ui/checkbox"
 const insights = [
   {
     icon: AlertTriangle,
-    text: "Dengue-like signals elevated along the Mula–Mutha corridor (Hadapsar → Mundhwa belt); entomology sweep recommended for construction water sumps.",
+    text: "Dengue-like symptoms are rising near Hadapsar. We recommend checking construction sites for standing water.",
     severity: "high" as const,
   },
   {
     icon: TrendingUp,
-    text: "PMC fever-clinic triage: respiratory ICD-10 J00–J22 share up 18% vs prior 7-day baseline in Kothrud–Karve Rd catchment.",
+    text: "Respiratory issues have increased by 18% around Kothrud over the last 7 days.",
     severity: "medium" as const,
   },
   {
     icon: MapPin,
-    text: "Micro-cluster near Hinjewadi Phase-2 worker housing (3 km radius): 12 elevated readings within 48h; coordinate with PCMC health post.",
+    text: "A new cluster of 12 fever cases detected near Hinjewadi Phase-2 worker housing within the last 48 hours.",
     severity: "high" as const,
   },
   {
     icon: TrendingUp,
-    text: "Stable enteral outbreak indicators at Sassoon campus catchment; ward-level chlorination logs within expected range.",
+    text: "Waterborne diseases are stable near Sassoon Hospital. Local water chlorination levels are normal.",
     severity: "positive" as const,
   },
 ]
@@ -31,17 +31,17 @@ const insights = [
 const initialInterventions = [
   {
     id: "intervention-1",
-    task: "Deploy mobile fever clinic van to Hadapsar–Mundhwa industrial fringe (PMC zone 6)",
+    task: "Deploy mobile fever clinic to Hadapsar industrial area.",
     completed: false,
   },
   {
     id: "intervention-2",
-    task: "Request surge bed mapping from Ruby Hall + Jehangir (Nagar Rd corridor)",
+    task: "Request available bed counts from Ruby Hall and Jehangir Hospital.",
     completed: false,
   },
   {
     id: "intervention-3",
-    task: "Notify PCMC Wakad–Tathawade UPHC for cross-municipal contact tracing",
+    task: "Notify PCMC health officials for cross-city contact tracing.",
     completed: false,
   },
 ]
@@ -75,7 +75,7 @@ export function AIAnalysisPanel({ lastUpdated }: AIAnalysisPanelProps) {
           <h2 className="text-sm font-semibold text-card-foreground">
             AI Outbreak Analysis
           </h2>
-          <p className="text-[11px] text-muted-foreground truncate">Pune MMR · rules engine</p>
+          <p className="text-[11px] text-muted-foreground truncate">Live AI Insights</p>
         </div>
       </div>
 
@@ -85,11 +85,10 @@ export function AIAnalysisPanel({ lastUpdated }: AIAnalysisPanelProps) {
             <AlertTriangle className="h-4 w-4 text-destructive mt-0.5 shrink-0" />
             <div>
               <h3 className="text-sm font-medium text-card-foreground mb-1">
-                Ward-level syndromic alert
+                Recent Outbreak Alert
               </h3>
               <p className="text-sm text-card-foreground/80 leading-relaxed">
-                Model highlights a 31% week-on-week rise in mixed fever presentations mapped to Shivajinagar–Camp and Viman Nagar reporting sites,
-                consistent with seasonal dengue dynamics and localised PM10-driven respiratory exacerbations.
+                The AI model has detected a 31% rise in fever cases around Shivajinagar and Viman Nagar, which points to a potential seasonal Dengue outbreak combined with respiratory issues due to poor air quality.
               </p>
             </div>
           </div>

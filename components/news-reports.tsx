@@ -65,51 +65,47 @@ export function NewsReports({ onBack }: NewsReportsProps) {
           { cat: "general", q: "Pune hospital health" }
         ] as const;
 
-        const results = await Promise.all(
-          queries.map(async ({ cat, q }) => {
-            const url = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(`https://news.google.com/rss/search?q=${q}&hl=en-IN&gl=IN&ceid=IN:en`)}`
-            try {
-              const res = await fetch(url)
-              const data = await res.json()
-              return { cat, items: data.status === "ok" ? (data.items || []) : [] }
-            } catch (err) {
-              console.error(`Error fetching ${cat}:`, err)
-              return { cat, items: [] }
-            }
-          })
-        )
-
         const allItems: NewsItem[] = []
         const seenUrls = new Set<string>()
 
-        results.forEach(({ cat, items }) => {
-          items.forEach((item: any) => {
-            const url = item.link
-            if (!seenUrls.has(url)) {
-              seenUrls.add(url)
-              
-              const titleParts = item.title.split(" - ")
-              const source = titleParts.length > 1 ? titleParts.pop() : "Google News"
-              const cleanTitle = titleParts.join(" - ")
-              
-              // Clean description by stripping basic HTML tags if any, otherwise use title as summary fallback
-              const summaryText = item.description 
-                ? item.description.replace(/<[^>]*>?/gm, '').slice(0, 150) + "..."
-                : cleanTitle
+        // Fetch sequentially to avoid free proxy rate limits (which drop parallel requests)
+        for (const { cat, q } of queries) {
+          const url = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(`https://news.google.com/rss/search?q=${q}&hl=en-IN&gl=IN&ceid=IN:en`)}`
+          try {
+            const res = await fetch(url)
+            const data = await res.json()
+            
+            if (data.status === "ok" && data.items) {
+              data.items.forEach((item: any) => {
+                const url = item.link
+                if (!seenUrls.has(url)) {
+                  seenUrls.add(url)
+                  
+                  const titleParts = item.title.split(" - ")
+                  const source = titleParts.length > 1 ? titleParts.pop() : "Google News"
+                  const cleanTitle = titleParts.join(" - ")
+                  
+                  const summaryText = item.description 
+                    ? item.description.replace(/<[^>]*>?/gm, '').slice(0, 150) + "..."
+                    : cleanTitle
 
-              allItems.push({
-                id: item.guid || url,
-                title: cleanTitle,
-                summary: summaryText,
-                source: source,
-                date: item.pubDate, // raw format, will be formatted in render
-                location: "Pune, Maharashtra",
-                category: cat as "alert" | "health" | "vaccination" | "general",
-                url: url
+                  allItems.push({
+                    id: item.guid || url,
+                    title: cleanTitle,
+                    summary: summaryText,
+                    source: source,
+                    date: item.pubDate,
+                    location: "Pune, Maharashtra",
+                    category: cat as "alert" | "health" | "vaccination" | "general",
+                    url: url
+                  })
+                }
               })
             }
-          })
-        })
+          } catch (err) {
+            console.error(`Error fetching ${cat}:`, err)
+          }
+        }
 
         // Sort by date descending
         allItems.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())

@@ -1,6 +1,7 @@
 "use client"
 
-import { AlertTriangle, Clock, MapPin, Wind, Thermometer, Droplets } from "lucide-react"
+import { useEffect, useState } from "react"
+import { AlertTriangle, Clock, MapPin, Wind, Thermometer, Droplets, Loader2, ExternalLink } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
 const localHealthReport = {
@@ -14,50 +15,56 @@ const localHealthReport = {
   ],
 }
 
-const communityUpdates = [
-  {
-    id: 1,
-    title: "Free Health Camp at Shivajinagar PHC",
-    excerpt: "Free check-ups including BP, sugar, and eye tests for senior citizens.",
-    date: "10 Apr",
-    category: "Health Camp",
-    source: "PMC Health",
-  },
-  {
-    id: 2,
-    title: "Vaccination Drive for Children Under 5",
-    excerpt: "Pulse Polio and routine immunization at all Anganwadi centers.",
-    date: "12 Apr",
-    category: "Vaccination",
-    source: "District Health",
-  },
-  {
-    id: 3,
-    title: "Dengue Prevention Workshop",
-    excerpt: "Community workshop on mosquito control at Hadapsar Hall.",
-    date: "15 Apr",
-    category: "Awareness",
-    source: "PCMC",
-  },
-  {
-    id: 4,
-    title: "Blood Donation Camp at Ruby Hall",
-    excerpt: "Emergency blood donation drive. All blood groups needed.",
-    date: "18 Apr",
-    category: "Blood Donation",
-    source: "Red Cross",
-  },
-  {
-    id: 5,
-    title: "Mental Health Helpline Launched",
-    excerpt: "New 24x7 mental health support helpline now available.",
-    date: "05 Apr",
-    category: "Mental Health",
-    source: "State Health",
-  },
-]
+interface NewsItem {
+  guid: string
+  title: string
+  pubDate: string
+  link: string
+  source: string
+}
 
 export function LocalNews() {
+  const [news, setNews] = useState<NewsItem[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    async function fetchNews() {
+      try {
+        const url = "https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fnews.google.com%2Frss%2Fsearch%3Fq%3D%28%22Pune%22%20OR%20%22PCMC%22%20OR%20%22Pimpri%20Chinchwad%22%29%20%28health%20OR%20healthcare%20OR%20hospital%20OR%20medical%20OR%20camp%29%26hl%3Den-IN%26gl%3DIN%26ceid%3DIN%3Aen"
+        const res = await fetch(url)
+        const data = await res.json()
+        
+        if (data.status === "ok" && data.items) {
+          const formattedNews = data.items.slice(0, 5).map((item: any) => {
+            // Google News appends the source to the end of the title like " - Source Name"
+            const titleParts = item.title.split(" - ")
+            const source = titleParts.length > 1 ? titleParts.pop() : "Google News"
+            const cleanTitle = titleParts.join(" - ")
+            
+            // Format date string
+            const dateObj = new Date(item.pubDate)
+            const dateStr = dateObj.toLocaleDateString('en-IN', { day: '2-digit', month: 'short' })
+
+            return {
+              guid: item.guid || item.link,
+              title: cleanTitle,
+              pubDate: dateStr,
+              link: item.link,
+              source: source,
+            }
+          })
+          setNews(formattedNews)
+        }
+      } catch (error) {
+        console.error("Failed to fetch local news:", error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchNews()
+  }, [])
+
   return (
     <div className="space-y-4">
       {/* Local Health Report */}
@@ -108,46 +115,52 @@ export function LocalNews() {
       <div>
         <h3 className="text-sm font-semibold text-foreground mb-2.5 flex items-center gap-1.5">
           <MapPin className="h-3.5 w-3.5 text-primary" />
-          Community Updates
+          Community Updates & News
         </h3>
 
-        <div className="space-y-2">
-          {communityUpdates.map((update) => (
-            <Card
-              key={update.id}
-              className="border bg-card shadow-sm"
-            >
-              <CardContent className="p-2.5">
-                <div className="flex items-center gap-1.5 mb-1.5">
-                  <span className={`px-1.5 py-0.5 rounded text-[10px] font-medium ${
-                    update.category === "Health Camp" 
-                      ? "bg-secondary/20 text-secondary"
-                      : update.category === "Vaccination"
-                      ? "bg-primary/10 text-primary"
-                      : update.category === "Awareness"
-                      ? "bg-accent/20 text-accent-foreground"
-                      : update.category === "Blood Donation"
-                      ? "bg-destructive/10 text-destructive"
-                      : "bg-muted text-muted-foreground"
-                  }`}>
-                    {update.category}
-                  </span>
-                  <span className="text-[10px] text-muted-foreground ml-auto flex items-center gap-1">
-                    <Clock className="h-2.5 w-2.5" />
-                    {update.date}
-                  </span>
-                </div>
-                <h4 className="text-xs font-semibold text-foreground mb-0.5 line-clamp-1">
-                  {update.title}
-                </h4>
-                <p className="text-[11px] text-muted-foreground line-clamp-1 mb-1">
-                  {update.excerpt}
-                </p>
-                <p className="text-[10px] font-medium text-foreground/70">{update.source}</p>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
+        {loading ? (
+          <div className="flex flex-col items-center justify-center py-8 text-muted-foreground">
+            <Loader2 className="h-6 w-6 animate-spin mb-2 text-primary/50" />
+            <p className="text-xs">Fetching latest local health news...</p>
+          </div>
+        ) : news.length > 0 ? (
+          <div className="space-y-2">
+            {news.map((update) => (
+              <a 
+                key={update.guid} 
+                href={update.link} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="block outline-none"
+              >
+                <Card className="border bg-card shadow-sm hover:border-primary/40 hover:shadow-md transition-all group">
+                  <CardContent className="p-2.5 relative">
+                    <div className="flex items-center gap-1.5 mb-1.5">
+                      <span className="px-1.5 py-0.5 rounded text-[10px] font-medium bg-primary/10 text-primary">
+                        Health News
+                      </span>
+                      <span className="text-[10px] text-muted-foreground ml-auto flex items-center gap-1">
+                        <Clock className="h-2.5 w-2.5" />
+                        {update.pubDate}
+                      </span>
+                    </div>
+                    <h4 className="text-xs font-semibold text-foreground mb-1 line-clamp-2 group-hover:text-primary transition-colors pr-4">
+                      {update.title}
+                    </h4>
+                    <p className="text-[10px] font-medium text-foreground/70 flex items-center gap-1">
+                      {update.source}
+                    </p>
+                    <ExternalLink className="h-3 w-3 absolute bottom-2.5 right-2.5 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
+                  </CardContent>
+                </Card>
+              </a>
+            ))}
+          </div>
+        ) : (
+          <div className="p-4 text-center border rounded-lg bg-muted/20">
+            <p className="text-xs text-muted-foreground">No recent health updates found for this region.</p>
+          </div>
+        )}
       </div>
     </div>
   )

@@ -238,7 +238,7 @@ export default function LandingPage() {
             <Link href="#" className="text-slate-500 hover:text-primary font-medium transition-colors">Terms of Service</Link>
             <Link href="#" className="text-slate-500 hover:text-primary font-medium transition-colors">Contact Support</Link>
           </div>
-          <p className="text-slate-400 text-sm">© 2024 SwasthyaLink Initiative. Built for resilience.</p>
+          <p className="text-slate-400 text-sm">© 2026 SwasthyaLink Initiative. Built for resilience.</p>
         </div>
       </footer>
 

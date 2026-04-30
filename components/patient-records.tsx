@@ -1,7 +1,10 @@
 "use client"
 
-import { useState, useMemo } from "react"
+import { useState, useMemo, useEffect } from "react"
 import { usePatient, type Patient } from "@/lib/patient-context"
+import { useAuth } from "@/lib/auth-context"
+import { db } from "@/lib/firebase"
+import { collectionGroup, query, where, getDocs, getDoc } from "firebase/firestore"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -28,11 +31,85 @@ interface PatientRecordsProps {
 type TimeFrame = "today" | "week" | "month" | "quarter" | "year" | "all"
 
 export function PatientRecords({ onBack, onViewPatient }: PatientRecordsProps) {
-  const { patients, setCurrentPatient } = usePatient()
+  const { setCurrentPatient } = usePatient()
+  const { hospital } = useAuth()
+
+  const [patients, setPatients] = useState<Patient[]>([])
+  const [isLoading, setIsLoading] = useState(true)
+
   const [searchQuery, setSearchQuery] = useState("")
   const [timeFrame, setTimeFrame] = useState<TimeFrame>("all")
   const [startDate, setStartDate] = useState("")
   const [endDate, setEndDate] = useState("")
+
+  useEffect(() => {
+    const fetchRecords = async () => {
+      if (!hospital?.hospital_id) return;
+      try {
+        setIsLoading(true);
+        const recordsQuery = query(
+          collectionGroup(db, "medical_records"),
+          where("hospital_id", "==", hospital.hospital_id)
+        );
+        const snapshot = await getDocs(recordsQuery);
+
+        const patientMap = new Map<string, Patient>();
+
+        for (const recordDoc of snapshot.docs) {
+          const recordData = recordDoc.data() as any;
+          const parentUserRef = recordDoc.ref.parent.parent;
+          if (!parentUserRef) continue;
+
+          let patient = patientMap.get(parentUserRef.id);
+          if (!patient) {
+            const userSnap = await getDoc(parentUserRef);
+            if (userSnap.exists()) {
+              const userData = userSnap.data();
+              // Calculate age
+              let age: any = "N/A";
+              if (userData.dob) {
+                const birthDate = new Date(userData.dob);
+                const today = new Date("2026-04-30");
+                age = today.getFullYear() - birthDate.getFullYear();
+              }
+
+              patient = {
+                id: userSnap.id,
+                ...userData,
+                fullName: userData.full_name || userData.fullName || "Unknown",
+                name: userData.full_name || userData.fullName || "Unknown",
+                swasthya_id: userData.swasthya_id || userData.swasthyaId,
+                swasthyaId: userData.swasthya_id || userData.swasthyaId,
+                phoneNumber: userData.phone || "N/A",
+                phone: userData.phone || "N/A",
+                bloodGroup: userData.blood_group || "N/A",
+                address: userData.location || "N/A",
+                age: age,
+                gender: userData.gender || "N/A",
+                medical_records: [],
+                medicalHistory: []
+              } as any;
+              patientMap.set(parentUserRef.id, patient!);
+            }
+          }
+
+          if (patient) {
+            const rec = { id: recordDoc.id, ...recordData };
+            patient.medical_records?.push(rec);
+            patient.medicalHistory?.push(rec);
+          }
+        }
+
+        setPatients(Array.from(patientMap.values()));
+      } catch (err) {
+        console.error("Failed to fetch patient records:", err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchRecords();
+  }, [hospital?.hospital_id]);
 
   // Get all visits (records) from all patients
   const allVisits = useMemo(() => {
@@ -245,7 +322,14 @@ export function PatientRecords({ onBack, onViewPatient }: PatientRecordsProps) {
           Patient Visit History
         </h3>
 
-        {uniquePatients.length === 0 ? (
+        {isLoading ? (
+          <Card className="border-border/50">
+            <CardContent className="py-16 text-center">
+              <div className="w-12 h-12 rounded-full border-4 border-primary border-t-transparent animate-spin mx-auto mb-4"></div>
+              <p className="text-lg font-medium text-foreground mb-1">Loading Records...</p>
+            </CardContent>
+          </Card>
+        ) : uniquePatients.length === 0 ? (
           <Card className="border-border/50">
             <CardContent className="py-16 text-center">
               <div className="w-20 h-20 rounded-full bg-muted/50 flex items-center justify-center mx-auto mb-4">
@@ -307,7 +391,7 @@ export function PatientRecords({ onBack, onViewPatient }: PatientRecordsProps) {
                     {lastVisit && (
                       <div className="mt-4 pt-4 border-t border-border/50 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                         <div>
-                        <p className="text-xs text-gray-500 mb-1 font-medium">Last Visit</p>
+                          <p className="text-xs text-gray-500 mb-1 font-medium">Last Visit</p>
                           <div className="flex items-center gap-2">
                             <Calendar className="w-4 h-4 text-primary" />
                             <span className="text-sm font-medium text-foreground">

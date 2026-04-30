@@ -15,6 +15,7 @@ interface Consultation {
   id: string
   specialization: string
   date: string
+  timestamp?: number
   hospitalName: string
   diagnosis: string
   symptoms: string[]
@@ -38,14 +39,16 @@ export function MedicalRecord() {
         const q = query(recordsRef);
 
         unsubSnapshot = onSnapshot(q, (snapshot) => {
-          const fetchedRecords = snapshot.docs.map(doc => {
+          let fetchedRecords = snapshot.docs.map(doc => {
             const data = doc.data()
             // Format date correctly
             let dateDisplay = "N/A"
+            let timestamp = 0
             if (data.date) {
               try {
                 const dateObj = data.date.toDate ? data.date.toDate() : new Date(data.date)
                 dateDisplay = format(dateObj, "dd MMM yyyy")
+                timestamp = dateObj.getTime()
               } catch (e) {
                 dateDisplay = data.date
               }
@@ -55,6 +58,7 @@ export function MedicalRecord() {
               id: doc.id,
               specialization: data.specialization || data.doctorType || "General Consultation",
               date: dateDisplay,
+              timestamp,
               hospitalName: data.hospitalName || data.location || "Private Clinic",
               diagnosis: data.diagnosis || "No specific diagnosis recorded",
               symptoms: Array.isArray(data.symptoms) ? data.symptoms : (Array.isArray(data.symptom) ? data.symptom : (data.symptoms || data.symptom ? [data.symptoms || data.symptom] : [])),
@@ -63,6 +67,10 @@ export function MedicalRecord() {
               followUp: data.followUpDate ? (data.followUpDate.toDate ? format(data.followUpDate.toDate(), "dd MMM yyyy") : data.followUpDate) : undefined
             }
           })
+          
+          // Sort records descending (newest first)
+          fetchedRecords.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0))
+          
           setRecords(fetchedRecords)
           setIsLoading(false)
         }, (err) => {
